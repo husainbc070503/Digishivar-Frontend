@@ -3,16 +3,16 @@ import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
-import { NavLink } from "react-router-dom";
-import { useGlobalContext } from "../contexts/AppContext";
-import { Avatar, IconButton, Menu, MenuItem, Tooltip } from "@mui/material";
+// import Button from "@mui/material/Button";
+// import { NavLink } from "react-router-dom";
+// import { useGlobalContext } from "../contexts/AppContext";
+// import { Avatar, IconButton, Menu, MenuItem, Tooltip } from "@mui/material";
 
 const Navbar = () => {
-  const { user, handleLogout } = useGlobalContext();
-  const [anchorElUser, setAnchorElUser] = React.useState(null);
-  const handleOpenUserMenu = (event) => setAnchorElUser(event.currentTarget);
-  const handleCloseUserMenu = () => setAnchorElUser(null);
+  // const { user, handleLogout } = useGlobalContext();
+  // const [anchorElUser, setAnchorElUser] = React.useState(null);
+  // const handleOpenUserMenu = (event) => setAnchorElUser(event.currentTarget);
+  // const handleCloseUserMenu = () => setAnchorElUser(null);
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -22,7 +22,7 @@ const Navbar = () => {
             Digishivar
           </Typography>
 
-          {user?.user ? (
+          {/* {user?.user ? (
             <NavLink to="/" className="nav-link">
               Profile
             </NavLink>
@@ -32,7 +32,7 @@ const Navbar = () => {
                 Login
               </NavLink>
             </Button>
-          )}
+          )} */}
         </Toolbar>
       </AppBar>
     </Box>
