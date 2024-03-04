@@ -1,15 +1,15 @@
 import { Box, Grid, Typography } from "@mui/material";
 import React from "react";
-import AboutImg1 from "../../assets/about-1.jpeg";
-import AboutImg2 from "../../assets/about-2.jpeg";
+import AboutImg1 from "../../assets/about-1.jpg";
+import AboutImg2 from "../../assets/about-2.jpg";
 import SectionHeading from "../SectionHeading";
 
 const About = () => {
   const para1 =
-    "A project management tool is a specialized software designed to help individuals and teams efficiently plan, organize, and execute projects from start to finish. It serves as a central hub for all project-related activities, providing features that facilitate collaboration, communication, and task management. These tools typically include functionalities such as task assignment, progress tracking, timeline visualization, file sharing, and communication tools to streamline project workflows.";
+    "DigiShivar is a revolutionary web application poised to transform the landscape of agricultural commerce. Unlike traditional models that involve multiple intermediaries, DigiShivar empowers farmers by providing them with a direct platform to showcase and sell their produce to consumers. By eliminating unnecessary middlemen, DigiShivar ensures that farmers receive fair compensation for their hard work while offering customers the freshest and highest-quality products.";
 
   const para2 =
-    "By offering a structured framework, project management tools enable users to break down complex projects into manageable tasks, set deadlines, allocate resources effectively, and monitor the overall progress. They enhance coordination among team members, ensuring everyone is on the same page and contributing to the project's success. Ultimately, project management tools contribute to increased productivity, better communication, and the successful completion of projects within specified timeframes and budgets.";
+    "Through DigiShivar, consumers gain access to a diverse range of farm-fresh produce, sourced directly from local farmers. This direct connection fosters transparency and trust, allowing customers to make informed decisions about the food they purchase. Additionally, DigiShivar's user-friendly interface makes the entire shopping experience seamless and convenient, enabling customers to support local agriculture with just a few clicks. With its mission to bridge the gap between farmers and consumers, DigiShivar is revolutionizing the way we buy and sell agricultural products, creating a more sustainable and equitable food system for all.";
 
   return (
     <Box>
@@ -20,8 +20,13 @@ const About = () => {
             <img src={AboutImg1} alt="about" />
           </Grid>
           <Grid item md={8}>
-            <Typography fontSize={35} fontWeight="bold" color="InfoText" className="Typography about-heading">
-              What is project management tool?
+            <Typography
+              fontSize={35}
+              fontWeight="bold"
+              color="InfoText"
+              className="Typography about-heading"
+            >
+              What is Digi-Shivar?
             </Typography>
             <Typography color="GrayText" fontSize={18} textAlign="justify">
               {para1}

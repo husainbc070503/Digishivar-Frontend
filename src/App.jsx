@@ -9,11 +9,11 @@ import { AppContext } from "./contexts/AppContext";
 const App = () => {
   const theme = createTheme({
     palette: {
-      primary: { main: "#387ADF" },
+      primary: { main: "#65C54B" },
       secondary: { main: "#EE4266" },
     },
     typography: {
-      fontFamily: "Bubblegum Sans",
+      fontFamily: "Playfair Display",
     },
   });
 

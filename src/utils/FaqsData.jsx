@@ -1,67 +1,65 @@
 const faqs = [
   {
     id: 1,
-    question: "What is the purpose of a project management tool?",
+    question:
+      "How does the direct relationship benefit both farmers and customers?",
     answer:
-      "A project management tool is designed to help teams plan, execute, and track projects efficiently. It facilitates collaboration, task assignment, progress tracking, and communication among team members.",
+      "For farmers, it ensures fair compensation for their produce as they bypass middlemen, maximizing their profits. Customers, on the other hand, gain access to fresher produce at competitive prices while supporting local farmers directly.",
   },
   {
     id: 2,
     question:
-      "How does user authentication work in the project management tool?",
+      "What kind of products are available for purchase on the platform?",
     answer:
-      "User authentication ensures secure access to the tool. Users need to sign in with their unique credentials (username/password) to verify their identity, protecting sensitive project information.",
+      "DigiShivar offers a wide variety of farm-fresh vegetables. Customers can find everything from leafy greens to root vegetables, and specialty items like heirloom tomatoes.",
   },
   {
     id: 3,
-    question:
-      "Can I create and manage teams within the project management tool?",
+    question: "How is the quality of the products ensured?",
     answer:
-      "Yes, the tool allows you to form teams. You can organize team members based on projects or departments, making it easier to assign tasks and streamline communication.",
+      "Farmers adhere to strict harvesting and packaging standards to maintain freshness, and products undergo thorough inspections before being listed on the platform.",
   },
   {
     id: 4,
-    question: "How do I assign tasks to team members with deadlines?",
+    question: "Are there options for organic or sustainable products?",
     answer:
-      "Task assignment is simple. You can select a team member, define the task, set a deadline, and assign it through the tool. This ensures clarity on responsibilities and timelines.",
+      "Many farmers on the platform offer organic or sustainably-grown produce, providing customers with eco-friendly choices that align with their values.",
   },
   {
     id: 5,
-    question: "Can I track the progress of tasks in real-time?",
+    question: "Are there discounts available for bulk orders?",
     answer:
-      "Yes, the project management tool provides real-time progress tracking. You can monitor task status, completion percentages, and overall project advancement through visual dashboards and reports.",
+      "Yes, DigiShivar offers discounts for bulk orders, encouraging customers to buy in larger quantities and supporting farmers by ensuring steady sales.",
   },
   {
     id: 6,
-    question: "Is there a feature for team communication within the tool?",
+    question: "Who can benefit from bulk ordering options?",
     answer:
-      "Absolutely. The tool includes communication features like chat, comments, and notifications. Team members can discuss tasks, share updates, and collaborate directly within the platform.",
+      "Bulk ordering is suitable for restaurants, cafes, schools, and other businesses looking to source fresh produce in larger quantities.",
   },
   {
     id: 7,
-    question: "How does the guidance from a guide or mentor feature work?",
+    question: "Can customers interact with the bloggers or farmers directly?",
     answer:
-      "The guidance feature allows mentors or guides to provide insights, feedback, and direction. They can offer advice within the tool, ensuring that team members have the support and assistance they need.",
+      "Yes, customers can engage with bloggers and farmers through comments,  and likes, fostering a sense of community and connection.",
   },
   {
     id: 8,
-    question:
-      "Does the project management tool provide notifications for approaching deadlines?",
+    question: "Is there a minimum order requirement for online purchases?",
     answer:
-      "Yes, the tool offers notification features to alert team members about impending deadlines. You can set reminders to receive notifications in advance, ensuring timely awareness of approaching task due dates.",
+      "Generally, there may or may not be a minimum order requirement, depending on the specific policies of the platform and the farmers involved.",
   },
   {
     id: 9,
-    question: "Is there a mobile app for the project management tool?",
+    question: "How is the pricing determined for products on the platform?",
     answer:
-      "Yes, the tool often comes with a mobile app, enabling team members to access project information, communicate, and manage tasks on the go.",
+      "Prices are determined based on factors such as production costs, market demand, and fair compensation for farmers, ensuring transparency and fairness in pricing.",
   },
   {
     id: 10,
-    question:
-      "How is data security ensured within the project management tool?",
+    question: "What payment methods are accepted for online purchases?",
     answer:
-      "The tool employs robust security measures, including encryption and access controls, to safeguard project data. Regular updates and compliance with industry standards contribute to a secure project management environment.",
+      "The platform typically accepts various payment methods, including credit/debit cards, digital wallets, and sometimes cash on delivery, providing convenience to customers.",
   },
 ];
 
