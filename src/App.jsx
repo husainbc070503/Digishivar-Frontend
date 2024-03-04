@@ -11,7 +11,7 @@ const App = () => {
   const theme = createTheme({
     palette: {
       primary: { main: "#65C54B" },
-      secondary: { main: "#EE4266" },
+      secondary: { main: "#333A73" },
     },
     typography: {
       fontFamily: "Playfair Display",

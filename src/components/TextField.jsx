@@ -23,7 +23,9 @@ const TextFieldInput = ({
 }) => {
   return (
     <FormControl fullWidth className="mb-4">
-      <Typography fontSize={18}>{title}</Typography>
+      <Typography fontSize={18} mb={1}>
+        {title}
+      </Typography>
       {fromAuth && (
         <Typography fontSize={16} color="GrayText" mb={1}>
           {text}
@@ -33,11 +35,13 @@ const TextFieldInput = ({
         id="outlined-adornment-password"
         type={type}
         endAdornment={
-          <InputAdornment position="end">
-            <IconButton aria-label="toggle password visibility" edge="end">
-              {icon}
-            </IconButton>
-          </InputAdornment>
+          icon && (
+            <InputAdornment position="end">
+              <IconButton aria-label="toggle password visibility" edge="end">
+                {icon}
+              </IconButton>
+            </InputAdornment>
+          )
         }
         name={others}
         placeholder={title}

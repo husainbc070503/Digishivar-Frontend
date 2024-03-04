@@ -12,7 +12,7 @@ import FarmerDash from "../farmer/FarmerDash";
 const Index = () => {
   const { user } = useGlobalContext();
 
-  return !user ? (
+  return !user.user ? (
     <Container maxWidth="lg">
       <Box>
         <Hero />

@@ -109,6 +109,138 @@ const AppContext = ({ children }) => {
     }
   };
 
+  /* Products */
+  const fetchProducts = async () => {
+    try {
+      const res = await fetch(`${api}/api/product/products`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${state.user.token}`,
+        },
+      });
+
+      const data = await res.json();
+      if (data.success)
+        dispatch({ type: "SET_PRODUCTS", payload: data.products });
+    } catch (error) {
+      toast.error(error.message, {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+    }
+  };
+
+  const addProduct = async (productDetails) => {
+    try {
+      const res = await fetch(`${api}/api/product/addProduct`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${state.user.token}`,
+        },
+        body: JSON.stringify(productDetails),
+      });
+
+      const data = await res.json();
+      if (data.success) return data;
+    } catch (error) {
+      toast.error(error.message, {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+    }
+  };
+
+  const updateProduct = async (productDetails, id) => {
+    try {
+      const res = await fetch(`${api}/api/product/editProduct/${id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${state.user.token}`,
+        },
+        body: JSON.stringify(productDetails),
+      });
+
+      const data = await res.json();
+      if (data.success) return data;
+    } catch (error) {
+      toast.error(error.message, {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+    }
+  };
+
+  const deleteProduct = async (id) => {
+    try {
+      const res = await fetch(`${api}/api/product/deleteProduct/${id}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${state.user.token}`,
+        },
+      });
+
+      const data = await res.json();
+      if (data.success) {
+        toast.success("Product Deleted", {
+          position: "top-right",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+
+        dispatch({ type: "DELETE_PRODUCT", payload: id });
+      } else {
+        toast.error(data.message, {
+          position: "top-right",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+      }
+    } catch (error) {
+      toast.error(error.message, {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+    }
+  };
+
   useEffect(() => {
     const authUser = JSON.parse(localStorage.getItem("d-ecomm-user"));
     if (authUser) dispatch({ type: "SET_USER", payload: authUser });
@@ -117,11 +249,21 @@ const AppContext = ({ children }) => {
 
   useEffect(() => {
     fetchProductPrices();
+    fetchProducts();
   }, [state.user]);
 
   return (
     <Context.Provider
-      value={{ ...state, registerUser, loginUser, handleLogout }}
+      value={{
+        ...state,
+        dispatch,
+        registerUser,
+        loginUser,
+        handleLogout,
+        addProduct,
+        updateProduct,
+        deleteProduct,
+      }}
     >
       {children}
     </Context.Provider>

@@ -6,7 +6,7 @@ import AlternateEmailIcon from "@mui/icons-material/AlternateEmail";
 import LocalPhoneIcon from "@mui/icons-material/LocalPhone";
 import MessageIcon from "@mui/icons-material/Message";
 import SectionHeading from "../SectionHeading";
-import TextFieldInput from "../authentication/auth/TextField";
+import TextFieldInput from "../TextField";
 import { api } from "../../utils/Api";
 import { toast } from "react-toastify";
 

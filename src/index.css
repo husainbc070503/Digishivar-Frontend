@@ -562,3 +562,31 @@ img {
     padding: 0;
   }
 }
+
+.MenuItem.capitalize,
+.Select.capitalize {
+  text-transform: capitalize;
+}
+
+.product-image {
+  height: 450px;
+  border-radius: 20px;
+  position: relative;
+  border: 1px solid #333A73;
+  margin-bottom: 1rem;
+}
+
+.product-image>img {
+  border-radius: 20px;
+}
+
+.product-image>label {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  padding: 4px;
+  color: #fff;
+  background: #333A73;
+  border-radius: 50%;
+  cursor: pointer;
+}

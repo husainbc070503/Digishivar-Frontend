@@ -8,7 +8,7 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import TokenIcon from "@mui/icons-material/Token";
 import { toast } from "react-toastify";
-import { api } from "../../../utils/Api";
+import { api } from "../utils/Api";
 import TextFieldInput from "./TextField";
 import PasswordField from "./PasswordField";
 import OtpForm from "./OtpForm";
