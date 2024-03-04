@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 const Context = createContext();
 const initialState = {
   user: {},
+  prices: [],
   products: [],
   orders: [],
   blogs: [],
@@ -81,11 +82,42 @@ const AppContext = ({ children }) => {
     });
   };
 
+  /* Produt Prices */
+  const fetchProductPrices = async () => {
+    try {
+      const res = await fetch(`${api}/api/price/prices`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${state.user.token}`,
+        },
+      });
+
+      const data = await res.json();
+      if (data.success) dispatch({ type: "SET_PRICES", payload: data.prices });
+    } catch (error) {
+      toast.error(error.message, {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+    }
+  };
+
   useEffect(() => {
     const authUser = JSON.parse(localStorage.getItem("d-ecomm-user"));
     if (authUser) dispatch({ type: "SET_USER", payload: authUser });
     else dispatch({ type: "REMOVE_USER" });
   }, [navigate]);
+
+  useEffect(() => {
+    fetchProductPrices();
+  }, [state.user]);
 
   return (
     <Context.Provider

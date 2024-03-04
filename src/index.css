@@ -11,7 +11,7 @@ img {
 }
 
 .container {
-  margin: 8rem 0;
+  margin: 6rem 0;
   padding-bottom: 30px;
 }
 
@@ -21,13 +21,6 @@ img {
   align-items: center;
   justify-content: center;
 }
-
-/* body {
-  background: url('./assets/hero-bg.jpeg');
-  background-size: cover;
-  background-attachment: fixed;
-  background-position: center;
-} */
 
 .auth-image {
   height: 60rem;
@@ -59,15 +52,17 @@ img {
 
 .nav-link {
   display: inline-block;
-  margin: 0 8px;
+  margin: 0 18px;
   text-decoration: none;
   color: #fff;
-  letter-spacing: 0.8px;
+  font-size: 20px;
   font-family: "Bubblegum Sans";
+  letter-spacing: 0.5px;
 }
 
 .nav-link.active {
-  color: #fff;
+  color: #070F2B;
+  font-weight: bold;
 }
 
 .nav-link-login {
@@ -77,6 +72,14 @@ img {
 
 .nav-link:hover {
   color: #fff;
+}
+
+.Typography.nav-text {
+  margin: 0 8px;
+  font-size: 18px;
+  color: #fff;
+  letter-spacing: 0.5px;
+  cursor: pointer;
 }
 
 .AppBar.nav {
