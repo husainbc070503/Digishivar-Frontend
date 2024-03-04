@@ -3,18 +3,6 @@ import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
-<<<<<<< HEAD
-// import Button from "@mui/material/Button";
-// import { NavLink } from "react-router-dom";
-// import { useGlobalContext } from "../contexts/AppContext";
-// import { Avatar, IconButton, Menu, MenuItem, Tooltip } from "@mui/material";
-
-const Navbar = () => {
-  // const { user, handleLogout } = useGlobalContext();
-  // const [anchorElUser, setAnchorElUser] = React.useState(null);
-  // const handleOpenUserMenu = (event) => setAnchorElUser(event.currentTarget);
-  // const handleCloseUserMenu = () => setAnchorElUser(null);
-=======
 import Button from "@mui/material/Button";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useGlobalContext } from "../contexts/AppContext";
@@ -23,7 +11,6 @@ import logo from "../assets/logo.jpeg";
 const Navbar = () => {
   const { user, handleLogout } = useGlobalContext();
   const navigate = useNavigate();
->>>>>>> 3606a52b11bddffb7b5584e91121183ea7dd7490
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -38,15 +25,10 @@ const Navbar = () => {
             </Typography>
           </Box>
 
-<<<<<<< HEAD
-          {/* {user?.user ? (
-            <NavLink to="/" className="nav-link">
-              Profile
-            </NavLink>
-=======
           <NavLink to="/" className="nav-link">
             Home
           </NavLink>
+
           {user?.user ? (
             <>
               {user?.user?.role === "farmer" && (
@@ -69,14 +51,13 @@ const Navbar = () => {
                 Logout
               </Typography>
             </>
->>>>>>> 3606a52b11bddffb7b5584e91121183ea7dd7490
           ) : (
             <Button variant="contained" color="secondary">
               <NavLink to="auth" className="nav-link-login">
                 Login
               </NavLink>
             </Button>
-          )} */}
+          )}
         </Toolbar>
       </AppBar>
     </Box>
