@@ -10,7 +10,7 @@ const Navbar = () => {
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="fixed">
         <Toolbar>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+          <Typography fontSize={30} sx={{ flexGrow: 1, color: "white" }}>
             Digishivar
           </Typography>
           <Button color="secondary" variant="contained">

@@ -1,6 +1,6 @@
 import { Button, Grid, Typography } from "@mui/material";
 import React from "react";
-import HeroImage from "../../assets/hero-img.png";
+import HeroImage from "../../assets/hero-img.jpg";
 import { useNavigate } from "react-router-dom";
 import { TypeAnimation } from "react-type-animation";
 
@@ -14,15 +14,15 @@ const Hero = () => {
           <Typography className="Typography title">
             <TypeAnimation
               sequence={[
-                "Your Ultimate Project Companion: Free and Online!",
+                "Join the farm-to-table revolution with DigiShivar!",
                 1000,
-                "Effortless Project Excellence: Your Free and Online Command Center!",
+                "DigiShivar: Where fresh produce meets your doorstep, hassle-free!",
                 1000,
-                "Seamless Project Harmony: Unlock Your Free Online Toolkit!",
+                "Cut out the middleman and connect farmers directly to you.",
                 1000,
-                "Elevate Your Projects: Experience the Free and Online Project Mastery!",
+                "DigiShivar: Where fresh produce meets your doorstep, hassle-free!",
                 1000,
-                "Empower Your Work: Unleash the Free Online Magic of Project Efficiency!",
+                "Cut out the middleman and connect farmers directly to you.",
                 100,
               ]}
               speed={50}
@@ -30,10 +30,11 @@ const Hero = () => {
             />
           </Typography>
           <Typography className="Typography text">
-            Say goodbye to project chaos! With our free online project
-            management tool, you can effortlessly organize and manage both your
-            individual projects and collaborative team efforts—all in one
-            convenient place.
+            Experience the transformative power of DigiShivar, where farmers
+            thrive and communities flourish. Connect directly with local
+            growers, savoring the freshest produce while supporting sustainable
+            agriculture. Embrace a new era of food transparency and empowerment,
+            delivered right to your doorstep.
           </Typography>
           <Button variant="contained" onClick={() => navigate("../auth")}>
             Get Started
