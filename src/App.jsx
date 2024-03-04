@@ -3,6 +3,8 @@ import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Index from "./pages/Index";
+import Authentication from "./pages/Authentication";
+import { AppContext } from "./contexts/AppContext";
 
 const App = () => {
   const theme = createTheme({
@@ -18,10 +20,13 @@ const App = () => {
   return (
     <ThemeProvider theme={theme}>
       <BrowserRouter>
-        <Navbar />
-        <Routes>
-          <Route path="/" element={<Index />} index />
-        </Routes>
+        <AppContext>
+          <Navbar />
+          <Routes>
+            <Route path="/" element={<Index />} index />
+            <Route path="/auth" element={<Authentication />} />
+          </Routes>
+        </AppContext>
       </BrowserRouter>
     </ThemeProvider>
   );

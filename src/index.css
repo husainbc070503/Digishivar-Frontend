@@ -30,7 +30,7 @@ img {
 } */
 
 .auth-image {
-  height: 88%;
+  height: 60rem;
 }
 
 .auth-form {
@@ -63,7 +63,7 @@ img {
   text-decoration: none;
   color: #fff;
   letter-spacing: 0.8px;
-  font-family: "Spectral";
+  font-family: "Bubblegum Sans";
 }
 
 .nav-link.active {

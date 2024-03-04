@@ -6,9 +6,13 @@ import About from "../components/sections/About";
 import Reviews from "../components/sections/Reviews";
 import Faqs from "../components/sections/Faqs";
 import Contact from "../components/sections/Contact";
+import { useGlobalContext } from "../contexts/AppContext";
+import FarmerDash from "../farmer/FarmerDash";
 
 const Index = () => {
-  return (
+  const { user } = useGlobalContext();
+
+  return !user ? (
     <Container maxWidth="lg">
       <Box>
         <Hero />
@@ -19,6 +23,8 @@ const Index = () => {
         <Contact />
       </Box>
     </Container>
+  ) : (
+    user?.user?.role === "farmer" && <FarmerDash />
   );
 };
 

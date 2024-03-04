@@ -16,7 +16,7 @@ const RadioField = ({ value, onChange }) => {
         value={value}
         onChange={onChange}
       >
-        {["User", "Guide", "Admin"].map((item, index) => (
+        {["Customer", "Farmer", "Admin"].map((item, index) => (
           <FormControlLabel
             key={index}
             value={item.toLowerCase()}
