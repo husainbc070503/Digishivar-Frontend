@@ -11,7 +11,7 @@ const initialState = {
   vegetable: "",
   desc: "",
   quantity_type: "",
-  quantity: 0,
+  quantity: 1,
   quality: "",
   img: "",
   category: "",
@@ -22,6 +22,7 @@ const AddProduct = () => {
   const [productDetails, setProductDetails] = useState(initialState);
   const [loading, setLoading] = useState(false);
   const [price, setPrice] = useState(0);
+  const [wholesalePrice, setWholesalePrice] = useState(0);
 
   const handleChange = (e) => {
     if (e.target.name === "vegetable") {
@@ -30,15 +31,18 @@ const AddProduct = () => {
       );
 
       setPrice(item[0]?.wholesalePrice);
+      setWholesalePrice(item[0]?.wholesalePrice);
     }
 
     if (e.target.name === "quantity") {
-      console.log(price);
-      setPrice((prevPrice) => prevPrice * e.target.value);
+      if (e.target.value !== "") {
+        setPrice(wholesalePrice * e.target.value);
+      }
     }
 
     if (e.target.name === "quantity_type") {
       if (e.target.value === "quintal") setPrice(price * 100);
+      else setPrice(wholesalePrice * productDetails.quantity);
     }
 
     setProductDetails({
@@ -227,7 +231,7 @@ const AddProduct = () => {
           </Grid>
         </Grid>
         <Grid container spacing={2}>
-          <Grid item md={4} xs={12}>
+          <Grid item md={5} xs={12}>
             <SelectField
               title="Quality"
               arr={["high", "moderate"]}
@@ -236,16 +240,7 @@ const AddProduct = () => {
               onChange={handleChange}
             />
           </Grid>
-          <Grid item md={4} xs={12}>
-            <TextFieldInput
-              title="Price"
-              type="number"
-              others="price"
-              value={price}
-              readOnly={true}
-            />
-          </Grid>
-          <Grid item md={4} xs={12}>
+          <Grid item md={5} xs={12}>
             <SelectField
               title="Category"
               arr={["leafy vegetable", "rooted vegetable", "herbs"]}
@@ -253,6 +248,14 @@ const AddProduct = () => {
               value={productDetails.category}
               onChange={handleChange}
             />
+          </Grid>
+          <Grid item md={2} xs={12}>
+            <Typography fontSize={18} mb={1}>
+              Price
+            </Typography>
+            <Typography fontWeight="bold" fontSize={28}>
+              &#8377; {price}
+            </Typography>
           </Grid>
         </Grid>
         <Button
