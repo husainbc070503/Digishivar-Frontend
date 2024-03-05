@@ -34,7 +34,7 @@ const AddProduct = () => {
 
     if (e.target.name === "quantity") {
       console.log(price);
-      setPrice(price * parseInt(e.target.value));
+      setPrice((prevPrice) => prevPrice * e.target.value);
     }
 
     if (e.target.name === "quantity_type") {
