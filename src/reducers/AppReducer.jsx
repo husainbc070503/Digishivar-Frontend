@@ -16,7 +16,7 @@ const AppReducer = (state, action) => {
       return { ...state, products: [...state.products, action.payload] };
 
     case "UPDATE_PRODUCT":
-      const arrPro = state.products;
+      let arrPro = state.products;
       arrPro = arrPro.map((item) => {
         if (item?._id === action.payload.id) return action.payload.product;
         return item;
@@ -28,6 +28,27 @@ const AppReducer = (state, action) => {
       return {
         ...state,
         products: state.products.filter((item) => item._id !== action.payload),
+      };
+
+    case "SET_BLOGS":
+      return { ...state, blogs: [...action.payload] };
+
+    case "ADD_BLOG":
+      return { ...state, blogs: [...state.products, action.payload] };
+
+    case "UPDATE_BLOG":
+      let arrBlog = state.blogs;
+      arrBlog = arrBlog.map((item) => {
+        if (item?._id === action.payload.id) return action.payload.blog;
+        return item;
+      });
+
+      return { ...state, blogs: arrBlog };
+
+    case "DELETE_BLOG":
+      return {
+        ...state,
+        blogs: state.blogs.filter((item) => item._id !== action.payload),
       };
 
     default:

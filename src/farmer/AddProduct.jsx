@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useGlobalContext } from "../contexts/AppContext";
 import { Box, Button, Container, Grid, Typography } from "@mui/material";
 import TextFieldInput from "../components/TextField";
@@ -6,6 +6,7 @@ import SelectField from "../components/SelectField";
 import AddIcon from "@mui/icons-material/Add";
 import NoImage from "../assets/no-image.jpg";
 import { toast } from "react-toastify";
+import { useNavigate, useParams } from "react-router-dom";
 
 const initialState = {
   vegetable: "",
@@ -18,11 +19,14 @@ const initialState = {
 };
 
 const AddProduct = () => {
-  const { prices, addProduct, dispatch } = useGlobalContext();
+  const { prices, addProduct, dispatch, products, updateProduct } =
+    useGlobalContext();
+  const { id } = useParams();
   const [productDetails, setProductDetails] = useState(initialState);
   const [loading, setLoading] = useState(false);
   const [price, setPrice] = useState(0);
   const [wholesalePrice, setWholesalePrice] = useState(0);
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     if (e.target.name === "vegetable") {
@@ -128,14 +132,23 @@ const AddProduct = () => {
   const handleSubmit = async () => {
     setLoading(true);
     try {
-      const data = await addProduct({
-        ...productDetails,
-        quantity: parseInt(productDetails.quantity),
-        price,
-      });
+      const data = !id
+        ? await addProduct({
+            ...productDetails,
+            quantity: parseInt(productDetails.quantity),
+            price,
+          })
+        : await updateProduct(
+            {
+              ...productDetails,
+              quantity: parseInt(productDetails.quantity),
+              price,
+            },
+            id
+          );
 
       if (data.success) {
-        toast.success("Product Added", {
+        toast.success(`Product ${id ? "Updated" : "Added"}`, {
           position: "top-right",
           autoClose: 2000,
           hideProgressBar: false,
@@ -146,10 +159,29 @@ const AddProduct = () => {
           theme: "light",
         });
 
-        dispatch({ type: "ADD_PRODUCT", payload: data.product });
+        !id
+          ? dispatch({ type: "ADD_PRODUCT", payload: data.product })
+          : dispatch({
+              type: "UPDATE_PRODUCT",
+              payload: { product: data.product, id },
+            });
+
         setProductDetails(initialState);
         setPrice(0);
+      } else {
+        toast.error(data.message, {
+          position: "top-right",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
       }
+
+      navigate("/");
     } catch (error) {
       toast.error(error.message, {
         position: "top-right",
@@ -166,6 +198,22 @@ const AddProduct = () => {
     }
   };
 
+  useEffect(() => {
+    if (id) {
+      const pro = products?.filter((item) => item?._id === id)[0];
+      const item = prices?.filter((item) =>
+        item?.vegetable.toLowerCase().includes(pro.vegetable.toLowerCase())
+      );
+
+      setProductDetails(pro);
+      setPrice(pro?.price);
+      setWholesalePrice(item[0]?.wholesalePrice);
+    } else {
+      setProductDetails(initialState);
+      setPrice(0);
+    }
+  }, [id]);
+
   return (
     <Container maxWidth="md" className="container">
       <Box>
@@ -176,11 +224,17 @@ const AddProduct = () => {
           textAlign="center"
           mb={1}
         >
-          Add Vegetable
+          {id ? "Edit" : "Add"} Vegetable
         </Typography>
         <div className="product-image">
           <img
-            src={productDetails.img ? productDetails.img : NoImage}
+            src={
+              id
+                ? productDetails?.img
+                : productDetails.img
+                ? productDetails.img
+                : NoImage
+            }
             alt="image"
           />
           <label htmlFor="add-product-image">
@@ -198,7 +252,7 @@ const AddProduct = () => {
           title="Vegetable"
           type="text"
           others="vegetable"
-          value={productDetails.vegetable}
+          value={productDetails?.vegetable}
           onChange={handleChange}
         />
         <TextFieldInput
@@ -207,7 +261,7 @@ const AddProduct = () => {
           others="desc"
           multiline={true}
           rows={4}
-          value={productDetails.desc}
+          value={productDetails?.desc}
           onChange={handleChange}
         />
         <Grid container spacing={2}>
@@ -216,7 +270,7 @@ const AddProduct = () => {
               title="Quantity"
               type="number"
               others="quantity"
-              value={productDetails.quantity}
+              value={productDetails?.quantity}
               onChange={handleChange}
             />
           </Grid>
@@ -225,7 +279,7 @@ const AddProduct = () => {
               title="Quantity Type"
               arr={["quintal", "kg"]}
               others="quantity_type"
-              value={productDetails.quantity_type}
+              value={productDetails?.quantity_type}
               onChange={handleChange}
             />
           </Grid>
@@ -236,7 +290,7 @@ const AddProduct = () => {
               title="Quality"
               arr={["high", "moderate"]}
               others="quality"
-              value={productDetails.quality}
+              value={productDetails?.quality}
               onChange={handleChange}
             />
           </Grid>
@@ -245,7 +299,7 @@ const AddProduct = () => {
               title="Category"
               arr={["leafy vegetable", "rooted vegetable", "herbs"]}
               others="category"
-              value={productDetails.category}
+              value={productDetails?.category}
               onChange={handleChange}
             />
           </Grid>
@@ -260,11 +314,12 @@ const AddProduct = () => {
         </Grid>
         <Button
           variant="contained"
-          className="w-100 mt-3"
+          color="success"
+          className="w-100 mt-3 fw-bold"
           disabled={loading}
           onClick={handleSubmit}
         >
-          Add
+          {id ? "Update" : "Add"}
         </Button>
       </Box>
     </Container>

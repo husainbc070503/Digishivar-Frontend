@@ -55,8 +55,8 @@ img {
   margin: 0 18px;
   text-decoration: none;
   color: #fff;
-  font-size: 20px;
-  font-family: "Bubblegum Sans";
+  font-size: 18px;
+  font-family: 'Playfair Display';
   letter-spacing: 0.5px;
 }
 
@@ -80,6 +80,7 @@ img {
   color: #fff;
   letter-spacing: 0.5px;
   cursor: pointer;
+  display: inline-block;
 }
 
 .AppBar.nav {
@@ -247,9 +248,20 @@ img {
   margin-bottom: 10px;
 }
 
+.nav-icon {
+  display: none;
+}
+
 @media (max-width: 890px) {
   .container {
     margin: 8rem 0 0;
+  }
+
+  .nav-icon {
+    display: block;
+    font-size: 16px;
+    margin-right: 10px;
+    margin-bottom: 4px;
   }
 
   .Typography.title {
@@ -268,17 +280,25 @@ img {
   .links {
     position: absolute;
     left: 0;
-    top: 110%;
+    top: -300%;
     width: 100%;
-    height: 0;
-    overflow-y: hidden;
-    background: #008a7a;
+    padding: 10px 12px;
+    background: #65C54B;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
     transition: all 0.5s;
+    z-index: -100;
+  }
+
+  .links .nav-link,
+  .links .Typography.nav-text {
+    color: #020827;
   }
 
   .links.open {
-    height: auto;
-    padding: 18px;
+    top: 100%;
   }
 
   .menu-icon {
@@ -441,6 +461,9 @@ img {
 }
 
 @media only screen and (max-width: 890px) {
+  .container {
+    margin: 6rem 0;
+  }
 
   .main-container,
   .otp-container {
@@ -561,6 +584,10 @@ img {
   .Box.auth-box {
     padding: 0;
   }
+
+  .Typography.farmer-dash {
+    text-align: center;
+  }
 }
 
 .MenuItem.capitalize,
@@ -588,5 +615,15 @@ img {
   color: #fff;
   background: #333A73;
   border-radius: 50%;
+  cursor: pointer;
+}
+
+.CardMedia.size {
+  width: 100%;
+  height: 220px;
+  margin: 0 auto;
+}
+
+.icon {
   cursor: pointer;
 }
