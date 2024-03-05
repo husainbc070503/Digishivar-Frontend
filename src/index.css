@@ -590,3 +590,9 @@ img {
   border-radius: 50%;
   cursor: pointer;
 }
+
+.OutlinedInput.readonly:read-only {
+  cursor: not-allowed;
+  background: #35374b36;
+  font-weight: bold;
+}

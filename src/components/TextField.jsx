@@ -52,6 +52,7 @@ const TextFieldInput = ({
         multiline={multiline}
         rows={rows}
         readOnly={readOnly}
+        className={readOnly && "OutlinedInput readonly"}
       />
     </FormControl>
   );

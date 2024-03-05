@@ -13,7 +13,6 @@ const initialState = {
   quantity_type: "",
   quantity: 0,
   quality: "",
-  price: 0,
   img: "",
   category: "",
 };
@@ -22,9 +21,31 @@ const AddProduct = () => {
   const { prices, addProduct, dispatch } = useGlobalContext();
   const [productDetails, setProductDetails] = useState(initialState);
   const [loading, setLoading] = useState(false);
+  const [price, setPrice] = useState(0);
 
-  const handleChange = (e) =>
-    setProductDetails({ ...productDetails, [e.target.name]: e.target.value });
+  const handleChange = (e) => {
+    if (e.target.name === "vegetable") {
+      const item = prices?.filter((item) =>
+        item?.vegetable.toLowerCase().includes(e.target.value.toLowerCase())
+      );
+
+      setPrice(item[0]?.wholesalePrice);
+    }
+
+    if (e.target.name === "quantity") {
+      console.log(price);
+      setPrice(price * parseInt(e.target.value));
+    }
+
+    if (e.target.name === "quantity_type") {
+      if (e.target.value === "quintal") setPrice(price * 100);
+    }
+
+    setProductDetails({
+      ...productDetails,
+      [e.target.name]: e.target.value,
+    });
+  };
 
   const handleUpload = async (file) => {
     setLoading(true);
@@ -106,7 +127,7 @@ const AddProduct = () => {
       const data = await addProduct({
         ...productDetails,
         quantity: parseInt(productDetails.quantity),
-        price: parseInt(productDetails.price),
+        price,
       });
 
       if (data.success) {
@@ -123,6 +144,7 @@ const AddProduct = () => {
 
         dispatch({ type: "ADD_PRODUCT", payload: data.product });
         setProductDetails(initialState);
+        setPrice(0);
       }
     } catch (error) {
       toast.error(error.message, {
@@ -219,8 +241,8 @@ const AddProduct = () => {
               title="Price"
               type="number"
               others="price"
-              value={productDetails.price}
-              onChange={handleChange}
+              value={price}
+              readOnly={true}
             />
           </Grid>
           <Grid item md={4} xs={12}>
