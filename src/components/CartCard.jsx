@@ -5,17 +5,17 @@ import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 
 const CartCard = ({ product }) => {
-  const { title, image, description, price } = product;
+  const { vegetable, img, desc, price } = product;
 
   return (
     <Card>
-      <CardMedia component="img" src={image} />
+      <CardMedia component="img" src={img} />
       <CardContent>
         <Typography fontSize={28} fontWeight="bold" mb={1} color="secondary">
-          {title}
+          {vegetable}
         </Typography>
         <Typography color="GrayText" textAlign="justify" fontSize={15} mb={1}>
-          {description}
+          {desc}
         </Typography>
         <Typography color="GrayText" textAlign="justify" fontSize={15} mb={1}>
           Price: ${price}

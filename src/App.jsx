@@ -14,6 +14,7 @@ import Customers from "./admin/Customers";
 import Farmers from "./admin/Farmers";
 import Products from "./admin/Products";
 import QnA from "./admin/QnA";
+import Cart from "./customer/Cart";
 
 const App = () => {
   const theme = createTheme({
@@ -41,6 +42,7 @@ const App = () => {
             <Route path="/addBlog" element={<CreateBlog />} />
             <Route path="/editBlog/:id" element={<CreateBlog />} />
             <Route path="/profile" element={<Profile />} />
+            <Route path="/cart" element={<Cart />} />
 
             {/* ADMIN */}
             <Route path="/customers" element={<Customers />} />

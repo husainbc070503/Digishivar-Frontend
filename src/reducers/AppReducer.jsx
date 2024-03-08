@@ -18,6 +18,9 @@ const AppReducer = (state, action) => {
     case "ADD_PRODUCT":
       return { ...state, products: [...state.products, action.payload] };
 
+    case "SET_CART":
+      return { ...state, cart: [...action.payload] };
+
     case "ADD_TO_CART":
       return { ...state, cart: [...state.cart, action.payload] };
 
