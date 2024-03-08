@@ -9,6 +9,7 @@ import { useGlobalContext } from "../contexts/AppContext";
 import logo from "../assets/logo.jpeg";
 import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
+import SideDrawer from "./SideDrawer";
 
 const Navbar = () => {
   const { user, handleLogout } = useGlobalContext();
@@ -19,6 +20,8 @@ const Navbar = () => {
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="fixed" sx={{ padding: "5px 0" }}>
         <Toolbar>
+          {user?.user?.role === "admin" && <SideDrawer />}
+          
           <Box sx={{ flexGrow: 1, display: "flex", alignItems: "center" }}>
             <div className="logo" onClick={() => navigate("/")}>
               <img src={logo} alt="logo" />
@@ -42,28 +45,32 @@ const Navbar = () => {
 
           <div className={`links ${open && "open"}`}>
             {user?.user ? (
-              user?.user?.role === "farmer" ? (
-                <>
-                  <NavLink to="../blogs" className="nav-link">
-                    Blogs
-                  </NavLink>
-                  <NavLink to="../addProduct" className="nav-link">
-                    Add Product
-                  </NavLink>
-                </>
-              ) : (
-                <>
-                  <NavLink to="../profile" className="nav-link">
-                    Profile
-                  </NavLink>
-                  <Typography
-                    className="Typography nav-text"
-                    onClick={handleLogout}
-                  >
-                    Logout
-                  </Typography>
-                </>
-              )
+              <>
+                {user?.user?.role === "farmer" ? (
+                  <>
+                    <NavLink to="../blogs" className="nav-link">
+                      Blogs
+                    </NavLink>
+                    <NavLink to="../addProduct" className="nav-link">
+                      Add Product
+                    </NavLink>
+                    <NavLink to="../orders" className="nav-link">
+                      Orders
+                    </NavLink>
+                  </>
+                ) : (
+                  <></>
+                )}
+                <NavLink to="../profile" className="nav-link">
+                  Profile
+                </NavLink>
+                <Typography
+                  className="Typography nav-text"
+                  onClick={handleLogout}
+                >
+                  Logout
+                </Typography>
+              </>
             ) : (
               <Button variant="contained" color="secondary">
                 <NavLink to="auth" className="nav-link-login">

@@ -9,6 +9,10 @@ import AddProduct from "./farmer/AddProduct";
 import Blogs from "./farmer/Blogs";
 import CreateBlog from "./farmer/CreateBlog";
 import Profile from "./pages/Profile";
+import Customers from "./admin/Customers";
+import Farmers from "./admin/Farmers";
+import Products from "./admin/Products";
+import QnA from "./admin/QnA";
 
 const App = () => {
   const theme = createTheme({
@@ -35,6 +39,12 @@ const App = () => {
             <Route path="/addBlog" element={<CreateBlog />} />
             <Route path="/editBlog/:id" element={<CreateBlog />} />
             <Route path="/profile" element={<Profile />} />
+
+            {/* ADMIN */}
+            <Route path="/customers" element={<Customers />} />
+            <Route path="/farmers" element={<Farmers />} />
+            <Route path="/products" element={<Products />} />
+            <Route path="/qna" element={<QnA />} />
           </Routes>
         </AppContext>
       </BrowserRouter>
