@@ -7,6 +7,7 @@ import Authentication from "./pages/Authentication";
 import { AppContext } from "./contexts/AppContext";
 import AddProduct from "./farmer/AddProduct";
 import Blogs from "./farmer/Blogs";
+import Blog from "./customer/Blogs";
 import CreateBlog from "./farmer/CreateBlog";
 import Profile from "./pages/Profile";
 
@@ -32,6 +33,7 @@ const App = () => {
             <Route path="/addProduct" element={<AddProduct />} />
             <Route path="/editProduct/:id" element={<AddProduct />} />
             <Route path="/blogs" element={<Blogs />} />
+            <Route path="/readblogs" element={<Blog />} />
             <Route path="/addBlog" element={<CreateBlog />} />
             <Route path="/editBlog/:id" element={<CreateBlog />} />
             <Route path="/profile" element={<Profile />} />

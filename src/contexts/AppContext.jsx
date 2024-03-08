@@ -301,10 +301,67 @@ const AppContext = ({ children }) => {
     }
   };
 
+  const addToCart = (productId) => {
+    const productToAdd = state.products.find(
+      (product) => product._id === productId
+    );
+    if (productToAdd) {
+      dispatch({ type: "ADD_TO_CART", payload: productToAdd });
+      updateLocalStorage("cart", [...state.cart, productToAdd]);
+      toast.success("Product added to cart", {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+    } else {
+      toast.error("Product not found", {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+    }
+  };
+
   /* Blogs */
   const fetchBlogs = async () => {
     try {
       const res = await fetch(`${api}/api/blog/blogs`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${state.user.token}`,
+        },
+      });
+
+      const data = await res.json();
+      if (data.success) dispatch({ type: "SET_BLOGS", payload: data.blogs });
+    } catch (error) {
+      toast.error(error.message, {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+    }
+  };
+
+  const readBlog = async () => {
+    try {
+      const res = await fetch(`${api}/api/blog/readblogs`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -436,7 +493,14 @@ const AppContext = ({ children }) => {
     const authUser = JSON.parse(localStorage.getItem("d-ecomm-user"));
     if (authUser) dispatch({ type: "SET_USER", payload: authUser });
     else dispatch({ type: "REMOVE_USER" });
+
+    const storedCart = JSON.parse(localStorage.getItem("cart"));
+    if (storedCart) dispatch({ type: "SET_CART", payload: storedCart });
   }, [navigate]);
+
+  const updateLocalStorage = (key, value) => {
+    localStorage.setItem(key, JSON.stringify(value));
+  };
 
   useEffect(() => {
     fetchProductPrices();
@@ -459,6 +523,8 @@ const AppContext = ({ children }) => {
         addBlog,
         updateBlog,
         deleteBlog,
+        readBlog,
+        addToCart,
       }}
     >
       {children}

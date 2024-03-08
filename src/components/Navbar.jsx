@@ -50,11 +50,23 @@ const Navbar = () => {
                   <NavLink to="../addProduct" className="nav-link">
                     Add Product
                   </NavLink>
+                  <Typography
+                    className="Typography nav-text"
+                    onClick={handleLogout}
+                  >
+                    Logout
+                  </Typography>
                 </>
               ) : (
                 <>
                   <NavLink to="../profile" className="nav-link">
                     Profile
+                  </NavLink>
+                  <NavLink to="../readblogs" className="nav-link">
+                    Blogs
+                  </NavLink>
+                  <NavLink to="../cart" className="nav-link">
+                    Cart
                   </NavLink>
                   <Typography
                     className="Typography nav-text"

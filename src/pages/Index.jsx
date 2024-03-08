@@ -8,6 +8,7 @@ import Faqs from "../components/sections/Faqs";
 import Contact from "../components/sections/Contact";
 import { useGlobalContext } from "../contexts/AppContext";
 import FarmerDash from "../farmer/FarmerDash";
+import CustomerHome from "../customer/CustomerHome";
 
 const Index = () => {
   const { user } = useGlobalContext();
@@ -23,8 +24,10 @@ const Index = () => {
         <Contact />
       </Box>
     </Container>
+  ) : user?.user?.role === "farmer" ? (
+    <FarmerDash />
   ) : (
-    user?.user?.role === "farmer" && <FarmerDash />
+    <CustomerHome />
   );
 };
 

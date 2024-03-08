@@ -62,4 +62,40 @@ const BlogCard = ({ item }) => {
   );
 };
 
-export default BlogCard;
+const CustBlogCard = ({ item }) => {
+  const { image, title, description, likes, comments } = item;
+
+  return (
+    <Card>
+      <CardMedia component="img" src={image} />
+      <CardContent>
+        <Typography fontSize={28} fontWeight="bold" mb={1} color="secondary">
+          {title}
+        </Typography>
+        <Typography color="GrayText" textAlign="justify" fontSize={15} mb={1}>
+          {description}
+        </Typography>
+      </CardContent>
+      <CardActions>
+        <Grid container spacing={2} alignItems="center">
+          <Grid item md={6} xs={6}>
+            <Tooltip title="Likes">
+              <div className="text-danger d-flex align-items-center">
+                <FavoriteBorderIcon className="fs-4" />
+                <span className="fs-5 ml-1">{likes?.length}</span>
+              </div>
+            </Tooltip>
+            <Tooltip title="Comments">
+              <div className="text-secondary d-flex align-items-center ms-2">
+                <CommentIcon className="fs-4" />
+                <span className="fs-5 ml-1">{comments?.length}</span>
+              </div>
+            </Tooltip>
+          </Grid>
+        </Grid>
+      </CardActions>
+    </Card>
+  );
+};
+
+export { BlogCard, CustBlogCard };

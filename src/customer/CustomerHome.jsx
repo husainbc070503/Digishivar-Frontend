@@ -1,18 +1,26 @@
-import { Box, Container, Grid, Typography } from "@mui/material";
+import { Box, Container, Typography, Grid } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useGlobalContext } from "../contexts/AppContext";
 import SearchBox from "../components/SearchBox";
 import SelectField from "../components/SelectField";
-import { VegetableCard } from "../components/VegetableCard";
+import { NonEditableVegetableCard } from "../components/VegetableCard";
 
-const FarmerDash = () => {
+const CustomerHome = () => {
   const { products, user } = useGlobalContext();
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState("");
+  console.log(products);
 
-  const myProducts = products?.filter(
-    (item) => item?.user?._id === user?.user?._id
-  );
+  const userAddress = user?.user?.address.split(",");
+
+  const myProducts = products?.filter((item) => {
+    let match = false;
+    userAddress.forEach((e) => {
+      match = true;
+      return; // Exiting the forEach loop once match is set to true
+    });
+    return match ? item : null; // Returning item if match is true, otherwise returning null
+  });
 
   const [filteredProducts, setFilteredProducts] = useState([]);
 
@@ -46,10 +54,9 @@ const FarmerDash = () => {
             <Typography
               fontSize={30}
               color="primary"
-              fontWeight="bold"
-              className="Typography farmer-dash"
+              className="Typography customer-dash"
             >
-              My Vegetables
+              Welcome to Digishivar!
             </Typography>
           </Grid>
           <Grid item md={4} xs={12}>
@@ -69,12 +76,12 @@ const FarmerDash = () => {
             />
           </Grid>
         </Grid>
-        {myProducts?.length > 0 ? (
+        {myProducts.length > 0 ? (
           <Grid container spacing={2}>
             {(search || category ? filteredProducts : myProducts)?.map(
               (item, ind) => (
                 <Grid item md={3} xs={12} key={ind}>
-                  <VegetableCard item={item} />
+                  <NonEditableVegetableCard item={item} />
                 </Grid>
               )
             )}
@@ -89,4 +96,4 @@ const FarmerDash = () => {
   );
 };
 
-export default FarmerDash;
+export default CustomerHome;

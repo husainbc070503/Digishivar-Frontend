@@ -10,6 +10,7 @@ import Typography from "@mui/material/Typography";
 import { Grid, Rating, Tooltip } from "@mui/material";
 import { Link } from "react-router-dom";
 import { useGlobalContext } from "../contexts/AppContext";
+import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 
 const VegetableCard = ({ item }) => {
   const { deleteProduct } = useGlobalContext();
@@ -25,7 +26,6 @@ const VegetableCard = ({ item }) => {
     price,
     category,
     rating,
-    reviews,
   } = item;
 
   return (
@@ -95,4 +95,81 @@ const VegetableCard = ({ item }) => {
   );
 };
 
-export default VegetableCard;
+const NonEditableVegetableCard = ({ item }) => {
+  const {
+    img,
+    vegetable,
+    desc,
+    quantity,
+    quality,
+    quantity_type,
+    price,
+    category,
+    rating,
+  } = item;
+
+  const { addToCart } = useGlobalContext();
+
+  const handleAddToCart = (productId) => {
+    addToCart(productId);
+  };
+  return (
+    <Card>
+      <CardMedia component="img" className="CardMedia size" src={img} />
+      <CardContent>
+        <Typography fontSize={24} fontWeight="bold" mb={1} color="secondary">
+          {vegetable}
+        </Typography>
+        <Typography color="GrayText" textAlign="justify" fontSize={14} mb={1}>
+          {desc}
+        </Typography>
+        <Grid container spacing={2} mb={2}>
+          <Grid item md={4} xs={4}>
+            <Typography fontSize={17}>Price</Typography>
+            <Typography className="fw-bold badge bg-success">
+              &#8377; {price}
+            </Typography>
+          </Grid>
+          <Grid item md={4} xs={4}>
+            <Typography fontSize={17}>Quantity</Typography>
+            <Typography className="fw-bold badge bg-info">
+              {quantity + " " + quantity_type}
+            </Typography>
+          </Grid>
+          <Grid item md={4} xs={4}>
+            <Typography fontSize={17}>Quality</Typography>
+            <Typography className="fw-bold badge bg-warning text-dark">
+              {quality[0].toUpperCase() + quality.substring(1)}
+            </Typography>
+          </Grid>
+        </Grid>
+        <Typography display="inline-block" fontSize={17}>
+          Category
+        </Typography>
+        <Typography
+          display="inline-block"
+          className="ms-2 fw-bold badge bg-danger"
+        >
+          {category[0].toUpperCase() + category.substring(1)}
+        </Typography>
+      </CardContent>
+      <CardActions>
+        <Grid container spacing={2}>
+          <Grid item md={6} xs={6}>
+            <Rating value={rating} precision={0.5} readOnly />
+          </Grid>
+        </Grid>
+        <Grid item md={6} xs={6} textAlign="end">
+          <Tooltip title="Add to Cart">
+            <AddShoppingCartIcon
+              className="text-danger fs-5 icon"
+              onClick={() => handleAddToCart(item._id)}
+            />
+          </Tooltip>
+        </Grid>
+      </CardActions>
+    </Card>
+  );
+};
+
+export { VegetableCard, NonEditableVegetableCard };
