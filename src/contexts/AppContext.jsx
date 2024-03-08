@@ -7,11 +7,13 @@ import { useNavigate } from "react-router-dom";
 const Context = createContext();
 const initialState = {
   user: {},
+  users: [],
   prices: [],
   products: [],
   orders: [],
   blogs: [],
   cart: [],
+  contacts: [],
 };
 
 const AppContext = ({ children }) => {
@@ -139,6 +141,32 @@ const AppContext = ({ children }) => {
       });
     } finally {
       setLoading(false);
+    }
+  };
+
+  const fetchUsers = async () => {
+    try {
+      const res = await fetch(`${api}/api/user/users`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${state.user.token}`,
+        },
+      });
+
+      const data = await res.json();
+      if (data.success) dispatch({ type: "SET_USERS", payload: data.users });
+    } catch (error) {
+      toast.error(error.message, {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
     }
   };
 
@@ -489,6 +517,34 @@ const AppContext = ({ children }) => {
     }
   };
 
+  /* Contacts */
+  const fetchContacts = async (req, res) => {
+    try {
+      const res = await fetch(`${api}/api/contact/contacts`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${state.user.token}`,
+        },
+      });
+
+      const data = await res.json();
+      if (data.success)
+        dispatch({ type: "SET_CONTACTS", payload: data.contacts });
+    } catch (error) {
+      toast.error(error.message, {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+    }
+  };
+
   useEffect(() => {
     const authUser = JSON.parse(localStorage.getItem("d-ecomm-user"));
     if (authUser) dispatch({ type: "SET_USER", payload: authUser });
@@ -506,6 +562,8 @@ const AppContext = ({ children }) => {
     fetchProductPrices();
     fetchProducts();
     fetchBlogs();
+    fetchUsers();
+    fetchContacts();
   }, [state.user]);
 
   return (

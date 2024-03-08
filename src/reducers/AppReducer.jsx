@@ -3,6 +3,9 @@ const AppReducer = (state, action) => {
     case "SET_USER":
       return { ...state, user: action.payload };
 
+    case "SET_USERS":
+      return { ...state, users: [...action.payload] };
+
     case "REMOVE_USER":
       return { ...state, user: {} };
 
@@ -52,6 +55,15 @@ const AppReducer = (state, action) => {
       return {
         ...state,
         blogs: state.blogs.filter((item) => item._id !== action.payload),
+      };
+
+    case "SET_CONTACTS":
+      return { ...state, contacts: action.payload };
+
+    case "DELETE_CONTACT":
+      return {
+        ...state,
+        contacts: state.contacts.filter((item) => item?._id !== action.payload),
       };
 
     default:

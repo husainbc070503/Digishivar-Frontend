@@ -9,6 +9,7 @@ import Contact from "../components/sections/Contact";
 import { useGlobalContext } from "../contexts/AppContext";
 import FarmerDash from "../farmer/FarmerDash";
 import CustomerHome from "../customer/CustomerHome";
+import AdminDash from "../admin/AdminDash";
 
 const Index = () => {
   const { user } = useGlobalContext();
@@ -26,6 +27,8 @@ const Index = () => {
     </Container>
   ) : user?.user?.role === "farmer" ? (
     <FarmerDash />
+  ) : user?.user?.role === "admin" ? (
+    <AdminDash />
   ) : (
     <CustomerHome />
   );
