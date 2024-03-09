@@ -369,6 +369,38 @@ const AppContext = ({ children }) => {
     updateLocalStorage("cart", updatedCart);
   };
 
+  /* WishList */
+  const addToWishlist = (productId) => {
+    const listOfProducts = state.products.find(
+      (product) => product._id === productId
+    );
+    if (listOfProducts) {
+      dispatch({ type: "ADD_TO_LIST", payload: listOfProducts });
+      updateLocalStorage("wishlist", [...state.cart, listOfProducts]);
+      toast.success("Product added to Wishlist", {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+    } else {
+      toast.error("Product not found", {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+    }
+  };
+
   /* Blogs */
   const fetchBlogs = async () => {
     try {
@@ -561,6 +593,9 @@ const AppContext = ({ children }) => {
 
     const storedCart = JSON.parse(localStorage.getItem("cart"));
     if (storedCart) dispatch({ type: "SET_CART", payload: storedCart });
+
+    const storedList = JSON.parse(localStorage.getItem("wishlist"));
+    if (storedList) dispatch({ type: "SET_LIST", payload: storedList });
   }, [navigate]);
 
   const updateLocalStorage = (key, value) => {
@@ -593,6 +628,7 @@ const AppContext = ({ children }) => {
         readBlog,
         addToCart,
         removeFromCart,
+        addToWishlist,
       }}
     >
       {children}

@@ -28,13 +28,10 @@ const Cart = () => {
 
   return (
     <Container maxWidth="xl" className="container">
-      <Typography fontSize={30} fontWeight="bold">
-        My Cart
-      </Typography>
       <Grid container spacing={2} my={1}>
         <Grid item md={6} xs={12}>
           <Typography fontSize={35} fontWeight="bold" color="primary">
-            <ShoppingCartIcon className="text-dark fs-3 me-2" /> Cart
+            <ShoppingCartIcon className="text-dark fs-3 me-2" /> My Cart
           </Typography>
         </Grid>
       </Grid>
@@ -73,7 +70,7 @@ const CartTable = ({ products, handleBuyAll }) => {
 
 const CartSummary = ({ onBuyAll }) => {
   return (
-    <div>
+    <div style={{ display: "flex", justifyContent: "center", marginTop: 20 }}>
       <Button variant="contained" color="primary" onClick={onBuyAll}>
         Buy All
       </Button>

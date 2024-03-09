@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useGlobalContext } from "../contexts/AppContext";
 import SearchBox from "../components/SearchBox";
 import SelectField from "../components/SelectField";
-import { VegetableCard } from "../components/VegetableCard";
+import VegetableCard from "../components/VegetableCard";
 
 const FarmerDash = () => {
   const { products, user } = useGlobalContext();

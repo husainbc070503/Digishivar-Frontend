@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useGlobalContext } from "../contexts/AppContext";
 import SearchBox from "../components/SearchBox";
 import SelectField from "../components/SelectField";
-import { NonEditableVegetableCard } from "../components/VegetableCard";
+import VegetableCard from "../components/VegetableCard";
 
 const CustomerHome = () => {
   const { products, user } = useGlobalContext();
@@ -81,7 +81,7 @@ const CustomerHome = () => {
             {(search || category ? filteredProducts : myProducts)?.map(
               (item, ind) => (
                 <Grid item md={3} xs={12} key={ind}>
-                  <NonEditableVegetableCard item={item} />
+                  <VegetableCard item={item} />
                 </Grid>
               )
             )}

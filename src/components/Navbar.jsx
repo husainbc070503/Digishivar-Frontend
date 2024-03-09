@@ -10,6 +10,8 @@ import logo from "../assets/logo.jpeg";
 import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
 import SideDrawer from "./SideDrawer";
+import WishListIcon from "@mui/icons-material/Favorite";
+import ShoppingCartCheckoutIcon from "@mui/icons-material/ShoppingCartCheckout";
 
 const Navbar = () => {
   const { user, handleLogout } = useGlobalContext();
@@ -63,6 +65,18 @@ const Navbar = () => {
                     Logout
                   </Typography>
                 </>
+              ) : user?.user?.role === "admin" ? (
+                <>
+                  <NavLink to="../profile" className="nav-link">
+                    Profile
+                  </NavLink>
+                  <Typography
+                    className="Typography nav-text"
+                    onClick={handleLogout}
+                  >
+                    Logout
+                  </Typography>
+                </>
               ) : (
                 <>
                   <NavLink to="../profile" className="nav-link">
@@ -72,7 +86,11 @@ const Navbar = () => {
                     Blogs
                   </NavLink>
                   <NavLink to="../cart" className="nav-link">
-                    Cart
+                    <ShoppingCartCheckoutIcon />
+                  </NavLink>
+
+                  <NavLink to="../wishlist" className="nav-link">
+                    <WishListIcon />
                   </NavLink>
                   <Typography
                     className="Typography nav-text"

@@ -21,8 +21,14 @@ const AppReducer = (state, action) => {
     case "SET_CART":
       return { ...state, cart: [...action.payload] };
 
+    case "SET_LIST":
+      return { ...state, wishlist: [...action.payload] };
+
     case "ADD_TO_CART":
       return { ...state, cart: [...state.cart, action.payload] };
+
+    case "ADD_TO_LIST":
+      return { ...state, wishlist: [...state.wishlist, action.payload] };
 
     case "REMOVE_FROM_CART":
       return {
