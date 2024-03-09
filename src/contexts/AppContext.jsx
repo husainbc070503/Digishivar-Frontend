@@ -334,9 +334,29 @@ const AppContext = ({ children }) => {
     const productToAdd = state.products.find(
       (product) => product._id === productId
     );
+
+    if (state.cart.find((item) => item?._id === productToAdd?._id)) {
+      return toast.error("Product already in cart", {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+    }
+
     if (productToAdd) {
-      dispatch({ type: "ADD_TO_CART", payload: productToAdd });
-      updateLocalStorage("cart", [...state.cart, productToAdd]);
+      dispatch({
+        type: "ADD_TO_CART",
+        payload: {
+          productToAdd,
+          quantity: productToAdd?.quantity,
+          quantityType: productToAdd?.quantity_type,
+        },
+      });
       toast.success("Product added to cart", {
         position: "top-right",
         autoClose: 2000,
@@ -361,13 +381,17 @@ const AppContext = ({ children }) => {
     }
   };
 
-  const removeFromCart = (productToRemove) => {
-    const updatedCart = state.cart.filter(
-      (product) => product._id !== productToRemove._id
-    );
-    dispatch({ type: "REMOVE_FROM_CART", payload: updatedCart });
-    updateLocalStorage("cart", updatedCart);
-  };
+  const removeFromCart = (id) =>
+    dispatch({ type: "REMOVE_FROM_CART", payload: id });
+
+  const incrementQuantity = (id, quantity) =>
+    dispatch({ type: "INCREMENT_QUANTITY", payload: { id, quantity } });
+
+  const decrementQuantity = (id) =>
+    dispatch({ type: "DECREMENT_QUANTITY", payload: id });
+
+  const handleChangeUserQuantityType = (id, value) =>
+    dispatch({ type: "CHANGE_QUANTITY_TYPE", payload: { id, value } });
 
   /* WishList */
   const addToWishlist = (productId) => {
@@ -376,7 +400,6 @@ const AppContext = ({ children }) => {
     );
     if (listOfProducts) {
       dispatch({ type: "ADD_TO_LIST", payload: listOfProducts });
-      updateLocalStorage("wishlist", [...state.cart, listOfProducts]);
       toast.success("Product added to Wishlist", {
         position: "top-right",
         autoClose: 2000,
@@ -591,16 +614,12 @@ const AppContext = ({ children }) => {
     if (authUser) dispatch({ type: "SET_USER", payload: authUser });
     else dispatch({ type: "REMOVE_USER" });
 
-    const storedCart = JSON.parse(localStorage.getItem("cart"));
+    const storedCart = JSON.parse(localStorage.getItem("d-ecomm-cart"));
     if (storedCart) dispatch({ type: "SET_CART", payload: storedCart });
 
     const storedList = JSON.parse(localStorage.getItem("wishlist"));
     if (storedList) dispatch({ type: "SET_LIST", payload: storedList });
   }, [navigate]);
-
-  const updateLocalStorage = (key, value) => {
-    localStorage.setItem(key, JSON.stringify(value));
-  };
 
   useEffect(() => {
     fetchProductPrices();
@@ -609,6 +628,12 @@ const AppContext = ({ children }) => {
     fetchUsers();
     fetchContacts();
   }, [state.user]);
+
+  useEffect(() => {
+    console.log("Cart-updated");
+    localStorage.setItem("d-ecomm-cart", JSON.stringify(state.cart));
+    if (state.cart.length === 0) localStorage.removeItem("d-ecomm-cart");
+  }, [state.cart]);
 
   return (
     <Context.Provider
@@ -629,6 +654,9 @@ const AppContext = ({ children }) => {
         addToCart,
         removeFromCart,
         addToWishlist,
+        incrementQuantity,
+        decrementQuantity,
+        handleChangeUserQuantityType,
       }}
     >
       {children}
