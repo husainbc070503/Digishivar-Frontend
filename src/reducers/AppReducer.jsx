@@ -24,6 +24,12 @@ const AppReducer = (state, action) => {
     case "ADD_TO_CART":
       return { ...state, cart: [...state.cart, action.payload] };
 
+    case "REMOVE_FROM_CART":
+      return {
+        ...state,
+        cart: state.cart.filter((product) => product._id !== action.payload),
+      };
+
     case "UPDATE_PRODUCT":
       let arrPro = state.products;
       arrPro = arrPro.map((item) => {

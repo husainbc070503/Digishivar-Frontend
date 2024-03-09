@@ -53,6 +53,9 @@ const Navbar = () => {
                   <NavLink to="../addProduct" className="nav-link">
                     Add Product
                   </NavLink>
+                  <NavLink to="../orders" className="nav-link">
+                    Orders
+                  </NavLink>
                   <Typography
                     className="Typography nav-text"
                     onClick={handleLogout}

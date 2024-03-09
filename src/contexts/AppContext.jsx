@@ -329,6 +329,7 @@ const AppContext = ({ children }) => {
     }
   };
 
+  //CART
   const addToCart = (productId) => {
     const productToAdd = state.products.find(
       (product) => product._id === productId
@@ -358,6 +359,14 @@ const AppContext = ({ children }) => {
         theme: "light",
       });
     }
+  };
+
+  const removeFromCart = (productToRemove) => {
+    const updatedCart = state.cart.filter(
+      (product) => product._id !== productToRemove._id
+    );
+    dispatch({ type: "REMOVE_FROM_CART", payload: updatedCart });
+    updateLocalStorage("cart", updatedCart);
   };
 
   /* Blogs */
@@ -583,6 +592,7 @@ const AppContext = ({ children }) => {
         deleteBlog,
         readBlog,
         addToCart,
+        removeFromCart,
       }}
     >
       {children}
