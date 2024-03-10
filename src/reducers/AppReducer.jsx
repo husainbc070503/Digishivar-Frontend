@@ -95,17 +95,7 @@ const AppReducer = (state, action) => {
       };
 
     case "ADD_TO_LIST":
-      return {
-        ...state,
-        wishlist: [
-          ...state.wishlist,
-          {
-            ...action.payload.productToAdd,
-            userQuantity: action.payload.quantity,
-            userQuantityType: action.payload.quantityType,
-          },
-        ],
-      };
+      return { ...state, wishlist: [...state.wishlist, action.payload] };
 
     case "REMOVE_FROM_CART":
       return {

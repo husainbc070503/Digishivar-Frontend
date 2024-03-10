@@ -599,6 +599,32 @@ const AppContext = ({ children }) => {
   };
 
   /* Review */
+  const readReview = async (productDetails, id) => {
+    try {
+      const res = await fetch(`${api}/api/product/readReview/${id}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${state.user.token}`,
+        },
+        body: JSON.stringify(productDetails),
+      });
+
+      const data = await res.json();
+      if (data.success) return data;
+    } catch (error) {
+      toast.error(error.message, {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+    }
+  };
 
   /* Contacts */
   const fetchContacts = async (req, res) => {
@@ -684,6 +710,7 @@ const AppContext = ({ children }) => {
         decrementQuantity,
         handleChangeUserQuantityType,
         removeFromList,
+        readReview,
       }}
     >
       {children}
