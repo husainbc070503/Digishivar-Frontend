@@ -66,8 +66,8 @@ const Cart = () => {
   );
 };
 
-const CartTable = ({ products, handleBuyAll }) => {
-  return (
+const CartTable = ({ products }) => {
+  return products?.length > 0 ? (
     <TableContainer>
       <Table>
         <TableHead>
@@ -87,6 +87,10 @@ const CartTable = ({ products, handleBuyAll }) => {
         </TableBody>
       </Table>
     </TableContainer>
+  ) : (
+    <Typography fontWeight="bold" fontSize={20}>
+      No products added to cart
+    </Typography>
   );
 };
 

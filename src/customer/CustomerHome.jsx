@@ -1,4 +1,4 @@
-import { Box, Container, Typography, Grid } from "@mui/material";
+import { Box, Container, Typography, Grid, Rating } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useGlobalContext } from "../contexts/AppContext";
 import SearchBox from "../components/SearchBox";
@@ -9,17 +9,19 @@ const CustomerHome = () => {
   const { products, user } = useGlobalContext();
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState("");
-  console.log(products);
-
+  const [rating, setRating] = useState(0);
   const userAddress = user?.user?.address.split(",");
 
   const myProducts = products?.filter((item) => {
     let match = false;
     userAddress.forEach((e) => {
-      match = true;
-      return; // Exiting the forEach loop once match is set to true
+      if (item?.user?.address.includes(e)) {
+        match = true;
+        return;
+      }
     });
-    return match ? item : null; // Returning item if match is true, otherwise returning null
+
+    return match ? item : null;
   });
 
   const [filteredProducts, setFilteredProducts] = useState([]);
@@ -44,7 +46,13 @@ const CustomerHome = () => {
         );
       }
     }
-  }, [search, category]);
+
+    if (rating !== 0) {
+      setFilteredProducts((prevArr) =>
+        prevArr.filter((item) => item.rating >= rating)
+      );
+    }
+  }, [search, category, rating]);
 
   return (
     <Container maxWidth="xl" className="container">
@@ -66,7 +74,7 @@ const CustomerHome = () => {
               handleChange={(e) => setSearch(e.target.value.toLowerCase())}
             />
           </Grid>
-          <Grid item md={4} xs={12}>
+          <Grid item md={3} xs={12}>
             <SelectField
               title="Category"
               arr={["all", "leafy vegetable", "rooted vegetable", "herbs"]}
@@ -75,20 +83,31 @@ const CustomerHome = () => {
               fromDash={true}
             />
           </Grid>
+          <Grid item md={1} xs={12}>
+            <Typography fontWeight="bold" fontSize={18}>
+              Rating
+            </Typography>
+            <Rating
+              value={rating}
+              onChange={(event, newValue) => setRating(newValue)}
+              precision={0.5}
+            />
+          </Grid>
         </Grid>
         {myProducts.length > 0 ? (
           <Grid container spacing={2}>
-            {(search || category ? filteredProducts : myProducts)?.map(
-              (item, ind) => (
-                <Grid item md={3} xs={12} key={ind}>
-                  <VegetableCard item={item} />
-                </Grid>
-              )
-            )}
+            {(search || category || rating
+              ? filteredProducts
+              : myProducts
+            )?.map((item, ind) => (
+              <Grid item md={3} xs={12} key={ind}>
+                <VegetableCard item={item} />
+              </Grid>
+            ))}
           </Grid>
         ) : (
           <Typography fontSize={20} fontWeight="bold">
-            No vegetables added. Please add some
+            No vegetables added by farmer.
           </Typography>
         )}
       </Box>

@@ -18,6 +18,21 @@ const AppReducer = (state, action) => {
     case "ADD_PRODUCT":
       return { ...state, products: [...state.products, action.payload] };
 
+    case "UPDATE_PRODUCT":
+      let arrPro = state.products;
+      arrPro = arrPro.map((item) => {
+        if (item?._id === action.payload.id) return action.payload.product;
+        return item;
+      });
+
+      return { ...state, products: arrPro };
+
+    case "DELETE_PRODUCT":
+      return {
+        ...state,
+        products: state.products.filter((item) => item._id !== action.payload),
+      };
+
     case "SET_CART":
       return { ...state, cart: [...action.payload] };
 
@@ -109,21 +124,6 @@ const AppReducer = (state, action) => {
         wishlist: state.wishlist.filter(
           (product) => product._id !== action.payload
         ),
-      };
-
-    case "UPDATE_PRODUCT":
-      let arrPro = state.products;
-      arrPro = arrPro.map((item) => {
-        if (item?._id === action.payload.id) return action.payload.product;
-        return item;
-      });
-
-      return { ...state, products: arrPro };
-
-    case "DELETE_PRODUCT":
-      return {
-        ...state,
-        products: state.products.filter((item) => item._id !== action.payload),
       };
 
     case "SET_BLOGS":

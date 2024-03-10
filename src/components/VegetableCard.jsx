@@ -5,13 +5,13 @@ import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
-import ReviewsIcon from "@mui/icons-material/Reviews";
 import Typography from "@mui/material/Typography";
 import { Grid, Rating, Tooltip } from "@mui/material";
 import { Link } from "react-router-dom";
 import { useGlobalContext } from "../contexts/AppContext";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import WishListIcon from "@mui/icons-material/Favorite";
+import Reviews from "../customer/Reviews";
 
 const VegetableCard = ({ item }) => {
   const { deleteProduct } = useGlobalContext();
@@ -27,8 +27,10 @@ const VegetableCard = ({ item }) => {
     price,
     category,
     rating,
+    reviews,
   } = item;
-  const { user, addToCart, addToWishlist, readReview } = useGlobalContext();
+
+  const { user, addToCart, addToWishlist } = useGlobalContext();
 
   const handleAddToCart = (productId) => {
     addToCart(productId);
@@ -36,10 +38,6 @@ const VegetableCard = ({ item }) => {
 
   const handleAddToWishlist = (productId) => {
     addToWishlist(productId);
-  };
-
-  const handleReview = (productId) => {
-    readReview(productId);
   };
 
   return (
@@ -89,10 +87,7 @@ const VegetableCard = ({ item }) => {
           </Grid>
           <Grid item md={6} xs={6} textAlign="end">
             <Tooltip title="Reviews">
-              <ReviewsIcon
-                className="icon mx-1 fs-5 text-secondary"
-                onClick={handleReview}
-              />
+              <Reviews id={_id} reviews={reviews} role={user?.user?.role} />
             </Tooltip>
 
             {user?.user ? (
@@ -114,7 +109,7 @@ const VegetableCard = ({ item }) => {
                 <>
                   <Tooltip title="Add to Cart">
                     <AddShoppingCartIcon
-                      className="text-primary fs-5 icon"
+                      className="text-primary fs-5 mx-1 icon"
                       onClick={() => handleAddToCart(item._id)}
                     />
                   </Tooltip>

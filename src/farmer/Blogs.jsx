@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import SearchBox from "../components/SearchBox";
 import { useGlobalContext } from "../contexts/AppContext";
 import { Link } from "react-router-dom";
-import { BlogCard } from "../components/BlogCard";
+import BlogCard from "../components/BlogCard";
 
 const Blogs = () => {
   const { blogs, user } = useGlobalContext();

@@ -330,7 +330,7 @@ const AppContext = ({ children }) => {
     }
   };
 
-  //CART
+  /* Cart */
   const addToCart = (productId) => {
     const productToAdd = state.products.find(
       (product) => product._id === productId
@@ -385,9 +385,6 @@ const AppContext = ({ children }) => {
   const removeFromCart = (id) =>
     dispatch({ type: "REMOVE_FROM_CART", payload: id });
 
-  const removeFromList = (id) =>
-    dispatch({ type: "REMOVE_FROM_LIST", payload: id });
-
   const incrementQuantity = (id, quantity) =>
     dispatch({ type: "INCREMENT_QUANTITY", payload: { id, quantity } });
 
@@ -441,36 +438,13 @@ const AppContext = ({ children }) => {
     }
   };
 
+  const removeFromList = (id) =>
+    dispatch({ type: "REMOVE_FROM_LIST", payload: id });
+
   /* Blogs */
   const fetchBlogs = async () => {
     try {
       const res = await fetch(`${api}/api/blog/blogs`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${state.user.token}`,
-        },
-      });
-
-      const data = await res.json();
-      if (data.success) dispatch({ type: "SET_BLOGS", payload: data.blogs });
-    } catch (error) {
-      toast.error(error.message, {
-        position: "top-right",
-        autoClose: 2000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-      });
-    }
-  };
-
-  const readBlog = async () => {
-    try {
-      const res = await fetch(`${api}/api/blog/readblogs`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -598,20 +572,343 @@ const AppContext = ({ children }) => {
     }
   };
 
-  /* Review */
-  const readReview = async (productDetails, id) => {
+  const likeBlog = async (id) => {
     try {
-      const res = await fetch(`${api}/api/product/readReview/${id}`, {
-        method: "GET",
+      const res = await fetch(`${api}/api/blog/likeBlog/${id}`, {
+        method: "PUT",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${state.user.token}`,
         },
-        body: JSON.stringify(productDetails),
       });
 
       const data = await res.json();
-      if (data.success) return data;
+      if (data.success) {
+        dispatch({ type: "UPDATE_BLOG", payload: { id, blog: data.blog } });
+      } else {
+        toast.error(data.message, {
+          position: "top-right",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+      }
+    } catch (error) {
+      toast.error(error.message, {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+    }
+  };
+
+  const dislikeBlog = async (id) => {
+    try {
+      const res = await fetch(`${api}/api/blog/dislikeBlog/${id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${state.user.token}`,
+        },
+      });
+
+      const data = await res.json();
+      if (data.success) {
+        dispatch({ type: "UPDATE_BLOG", payload: { id, blog: data.blog } });
+      } else {
+        toast.error(data.message, {
+          position: "top-right",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+      }
+    } catch (error) {
+      toast.error(error.message, {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+    }
+  };
+
+  const addComment = async (id, comment, setOpenCommentBox) => {
+    try {
+      const res = await fetch(`${api}/api/blog/addComment/${id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${state.user.token}`,
+        },
+        body: JSON.stringify({ comment }),
+      });
+
+      const data = await res.json();
+      if (data.success) {
+        toast.success("Comment Added", {
+          position: "top-right",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+
+        dispatch({
+          type: "UPDATE_BLOG",
+          payload: { id, blog: data.blog },
+        });
+
+        setOpenCommentBox(false);
+      } else {
+        toast.error(data.message, {
+          position: "top-right",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+      }
+    } catch (error) {
+      toast.error(error.message, {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+    }
+  };
+
+  const deleteComment = async (id, cid) => {
+    try {
+      const res = await fetch(`${api}/api/blog/deleteComment/${id}/${cid}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${state.user.token}`,
+        },
+      });
+
+      const data = await res.json();
+      if (data.success) {
+        toast.success("Comment Deleted", {
+          position: "top-right",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+
+        dispatch({
+          type: "UPDATE_BLOG",
+          payload: { id, blog: data.blog },
+        });
+      } else {
+        toast.error(data.message, {
+          position: "top-right",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+      }
+    } catch (error) {
+      toast.error(error.message, {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+    }
+  };
+
+  /* Review */
+  const addReview = async (id, review, setOpenReview) => {
+    try {
+      const res = await fetch(`${api}/api/product/addReview/${id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${state.user.token}`,
+        },
+        body: JSON.stringify({ review }),
+      });
+
+      const data = await res.json();
+      if (data.success) {
+        toast.success("Review Added", {
+          position: "top-right",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+
+        dispatch({
+          type: "UPDATE_PRODUCT",
+          payload: { id, product: data.product },
+        });
+
+        setOpenReview(false);
+      } else {
+        toast.error(data.message, {
+          position: "top-right",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+      }
+    } catch (error) {
+      toast.error(error.message, {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+    }
+  };
+
+  const deleteReview = async (id, rid) => {
+    try {
+      const res = await fetch(`${api}/api/product/deleteReview/${id}/${rid}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${state.user.token}`,
+        },
+      });
+
+      const data = await res.json();
+      if (data.success) {
+        toast.success("Review Deleted", {
+          position: "top-right",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+
+        dispatch({
+          type: "UPDATE_PRODUCT",
+          payload: { id, product: data.product },
+        });
+      } else {
+        toast.error(data.message, {
+          position: "top-right",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+      }
+    } catch (error) {
+      toast.error(error.message, {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+    }
+  };
+
+  const giveRating = async (id, rating) => {
+    try {
+      const res = await fetch(`${api}/api/product/rate/${id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${state.user.token}`,
+        },
+        body: JSON.stringify({ rating }),
+      });
+
+      const data = await res.json();
+      if (data.success) {
+        toast.success("Product Rated", {
+          position: "top-right",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+
+        dispatch({
+          type: "UPDATE_PRODUCT",
+          payload: { id, product: data.product },
+        });
+      } else {
+        toast.error(data.message, {
+          position: "top-right",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+      }
     } catch (error) {
       toast.error(error.message, {
         position: "top-right",
@@ -702,7 +999,6 @@ const AppContext = ({ children }) => {
         addBlog,
         updateBlog,
         deleteBlog,
-        readBlog,
         addToCart,
         removeFromCart,
         addToWishlist,
@@ -710,7 +1006,13 @@ const AppContext = ({ children }) => {
         decrementQuantity,
         handleChangeUserQuantityType,
         removeFromList,
-        readReview,
+        addReview,
+        deleteReview,
+        giveRating,
+        likeBlog,
+        dislikeBlog,
+        addComment,
+        deleteComment,
       }}
     >
       {children}

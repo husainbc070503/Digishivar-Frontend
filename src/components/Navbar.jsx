@@ -59,24 +59,6 @@ const Navbar = () => {
                   <NavLink to="../orders" className="nav-link">
                     Orders
                   </NavLink>
-                  <Typography
-                    className="Typography nav-text"
-                    onClick={handleLogout}
-                  >
-                    Logout
-                  </Typography>
-                </>
-              ) : user?.user?.role === "admin" ? (
-                <>
-                  <NavLink to="../profile" className="nav-link">
-                    Profile
-                  </NavLink>
-                  <Typography
-                    className="Typography nav-text"
-                    onClick={handleLogout}
-                  >
-                    Logout
-                  </Typography>
                 </>
               ) : (
                 <>
@@ -97,12 +79,6 @@ const Navbar = () => {
                       <WishListIcon />
                     </Badge>
                   </NavLink>
-                  <Typography
-                    className="Typography nav-text"
-                    onClick={handleLogout}
-                  >
-                    Logout
-                  </Typography>
                 </>
               )
             ) : (
@@ -111,6 +87,20 @@ const Navbar = () => {
                   Login
                 </NavLink>
               </Button>
+            )}
+
+            {user?.user && (
+              <>
+                <NavLink to="../profile" className="nav-link">
+                  Profile
+                </NavLink>
+                <Typography
+                  className="Typography nav-text"
+                  onClick={handleLogout}
+                >
+                  Logout
+                </Typography>
+              </>
             )}
           </div>
         </Toolbar>

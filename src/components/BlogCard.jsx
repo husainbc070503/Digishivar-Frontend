@@ -10,11 +10,15 @@ import { Grid, Tooltip } from "@mui/material";
 import { Link } from "react-router-dom";
 import { useGlobalContext } from "../contexts/AppContext";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
-import CommentIcon from "@mui/icons-material/Comment";
+
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import Comments from "../customer/Comments";
 
 const BlogCard = ({ item }) => {
-  const { deleteBlog } = useGlobalContext();
+  console.log(item);
+  const { deleteBlog, user, likeBlog, dislikeBlog } = useGlobalContext();
   const { _id, image, title, description, likes, comments } = item;
+  console.log(likes);
 
   return (
     <Card>
@@ -32,70 +36,54 @@ const BlogCard = ({ item }) => {
           <Grid item md={6} xs={6} className="d-flex align-items-center">
             <Tooltip title="Likes">
               <div className="text-danger d-flex align-items-center">
-                <FavoriteBorderIcon className="fs-4" />
+                {user?.user?.role === "customer" ? (
+                  !likes?.find((item) => item?._id === user?.user?._id) ? (
+                    <FavoriteBorderIcon
+                      className="fs-5 icon"
+                      onClick={() => likeBlog(_id)}
+                    />
+                  ) : (
+                    <FavoriteIcon
+                      className="icon fs-5"
+                      onClick={() => dislikeBlog(_id)}
+                    />
+                  )
+                ) : (
+                  <FavoriteIcon className="fs-5" />
+                )}
                 <span className="fs-5 ml-1">{likes?.length}</span>
               </div>
             </Tooltip>
             <Tooltip title="Comments">
               <div className="text-secondary d-flex align-items-center ms-2">
-                <CommentIcon className="fs-4" />
+                <Comments
+                  id={_id}
+                  role={user?.user?.role}
+                  comments={comments}
+                />
                 <span className="fs-5 ml-1">{comments?.length}</span>
               </div>
             </Tooltip>
           </Grid>
-          <Grid item md={6} xs={6} textAlign="end">
-            <Tooltip title="Edit">
-              <Link to={`../editBlog/${_id}`}>
-                <EditIcon className="icon mx-1 fs-5 text-warning" />
-              </Link>
-            </Tooltip>
-            <Tooltip title="Delete">
-              <DeleteIcon
-                className="text-danger fs-5 icon"
-                onClick={() => deleteBlog(_id)}
-              />
-            </Tooltip>
-          </Grid>
+          {user?.user?.role === "farmer" && (
+            <Grid item md={6} xs={6} textAlign="end">
+              <Tooltip title="Edit">
+                <Link to={`../editBlog/${_id}`}>
+                  <EditIcon className="icon mx-1 fs-5 text-warning" />
+                </Link>
+              </Tooltip>
+              <Tooltip title="Delete">
+                <DeleteIcon
+                  className="text-danger fs-5 icon"
+                  onClick={() => deleteBlog(_id)}
+                />
+              </Tooltip>
+            </Grid>
+          )}
         </Grid>
       </CardActions>
     </Card>
   );
 };
 
-const CustBlogCard = ({ item }) => {
-  const { image, title, description, likes, comments } = item;
-
-  return (
-    <Card>
-      <CardMedia component="img" src={image} />
-      <CardContent>
-        <Typography fontSize={28} fontWeight="bold" mb={1} color="secondary">
-          {title}
-        </Typography>
-        <Typography color="GrayText" textAlign="justify" fontSize={15} mb={1}>
-          {description}
-        </Typography>
-      </CardContent>
-      <CardActions>
-        <Grid container spacing={2} alignItems="center">
-          <Grid item md={6} xs={6}>
-            <Tooltip title="Likes">
-              <div className="text-danger d-flex align-items-center">
-                <FavoriteBorderIcon className="fs-4" />
-                <span className="fs-5 ml-1">{likes?.length}</span>
-              </div>
-            </Tooltip>
-            <Tooltip title="Comments">
-              <div className="text-secondary d-flex align-items-center ms-2">
-                <CommentIcon className="fs-4" />
-                <span className="fs-5 ml-1">{comments?.length}</span>
-              </div>
-            </Tooltip>
-          </Grid>
-        </Grid>
-      </CardActions>
-    </Card>
-  );
-};
-
-export { BlogCard, CustBlogCard };
+export default BlogCard;
