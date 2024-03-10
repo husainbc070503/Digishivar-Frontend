@@ -385,6 +385,9 @@ const AppContext = ({ children }) => {
   const removeFromCart = (id) =>
     dispatch({ type: "REMOVE_FROM_CART", payload: id });
 
+  const removeFromList = (id) =>
+    dispatch({ type: "REMOVE_FROM_LIST", payload: id });
+
   const incrementQuantity = (id, quantity) =>
     dispatch({ type: "INCREMENT_QUANTITY", payload: { id, quantity } });
 
@@ -399,6 +402,19 @@ const AppContext = ({ children }) => {
     const listOfProducts = state.products.find(
       (product) => product._id === productId
     );
+
+    if (state.wishlist.find((item) => item?._id === listOfProducts?._id)) {
+      return toast.error("Product already in list", {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+    }
     if (listOfProducts) {
       dispatch({ type: "ADD_TO_LIST", payload: listOfProducts });
       toast.success("Product added to Wishlist", {
@@ -620,7 +636,7 @@ const AppContext = ({ children }) => {
     const storedCart = JSON.parse(localStorage.getItem("d-ecomm-cart"));
     if (storedCart) dispatch({ type: "SET_CART", payload: storedCart });
 
-    const storedList = JSON.parse(localStorage.getItem("wishlist"));
+    const storedList = JSON.parse(localStorage.getItem("d-ecomm-wishlist"));
     if (storedList) dispatch({ type: "SET_LIST", payload: storedList });
   }, [navigate]);
 
@@ -637,6 +653,13 @@ const AppContext = ({ children }) => {
     localStorage.setItem("d-ecomm-cart", JSON.stringify(state.cart));
     if (state.cart.length === 0) localStorage.removeItem("d-ecomm-cart");
   }, [state.cart]);
+
+  useEffect(() => {
+    console.log("Wishlist-updated");
+    localStorage.setItem("d-ecomm-wishlist", JSON.stringify(state.wishlist));
+    if (state.wishlist.length === 0)
+      localStorage.removeItem("d-ecomm-wishlist");
+  }, [state.wishlist]);
 
   return (
     <Context.Provider
@@ -660,6 +683,7 @@ const AppContext = ({ children }) => {
         incrementQuantity,
         decrementQuantity,
         handleChangeUserQuantityType,
+        removeFromList,
       }}
     >
       {children}

@@ -59,7 +59,8 @@ const WishTable = ({ products }) => {
 };
 
 const WishRow = ({ product, index }) => {
-  const { vegetable, img, price, category } = product;
+  const { _id, vegetable, img, price, category } = product;
+  const { removeFromList, addToCart } = useGlobalContext();
 
   return (
     <TableRow key={index}>
@@ -73,9 +74,24 @@ const WishRow = ({ product, index }) => {
       <Data align="center" text={price} />
       <Data
         align="center"
-        text={<AddShoppingCartIcon className="text-primary" />}
+        text={
+          <AddShoppingCartIcon
+            className="fs-5 icon"
+            color="error"
+            onClick={() => addToCart(_id)}
+          />
+        }
       />
-      <Data align="center" text={<DeleteIcon />} />
+      <Data
+        align="center"
+        text={
+          <DeleteIcon
+            className="fs-5 icon"
+            color="error"
+            onClick={() => removeFromList(_id)}
+          />
+        }
+      />
     </TableRow>
   );
 };

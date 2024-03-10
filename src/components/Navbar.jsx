@@ -15,7 +15,7 @@ import ShoppingCartCheckoutIcon from "@mui/icons-material/ShoppingCartCheckout";
 import { Badge } from "@mui/material";
 
 const Navbar = () => {
-  const { user, handleLogout, cart } = useGlobalContext();
+  const { user, handleLogout, cart, wishlist } = useGlobalContext();
   const [open, setOpen] = React.useState(false);
   const navigate = useNavigate();
 
@@ -93,7 +93,9 @@ const Navbar = () => {
                   </NavLink>
 
                   <NavLink to="../wishlist" className="nav-link">
-                    <WishListIcon />
+                    <Badge badgeContent={wishlist.length} color="secondary">
+                      <WishListIcon />
+                    </Badge>
                   </NavLink>
                   <Typography
                     className="Typography nav-text"
