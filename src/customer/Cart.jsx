@@ -8,7 +8,6 @@ import {
   TableHead,
   TableRow,
   Typography,
-  Button,
 } from "@mui/material";
 import { useGlobalContext } from "../contexts/AppContext";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
@@ -17,14 +16,10 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 import SelectField from "../components/SelectField";
+import { NavLink } from "react-router-dom";
 
 const Cart = () => {
   const { cart, prices } = useGlobalContext();
-
-  const handleBuyAll = () => {
-    // Implement logic for buying all products
-    console.log("Buying all products");
-  };
 
   const totalPrice = () => {
     var sum = 0;
@@ -38,7 +33,6 @@ const Cart = () => {
         sum += item.userQuantity * actualPriceOfProduct * 100;
       else sum += item.userQuantity * actualPriceOfProduct;
     });
-
     return sum;
   };
 
@@ -48,10 +42,10 @@ const Cart = () => {
         <ShoppingCartIcon className="text-dark fs-3 me-2" /> My Cart
       </Typography>
       <div className="cart-container">
-        <CartTable products={cart} handleBuyAll={handleBuyAll} />
+        <CartTable products={cart} />
       </div>
       <div className="d-flex align-items-center">
-        <CartSummary onBuyAll={handleBuyAll} />
+        <CartSummary total={totalPrice()} />
         <Typography
           ml={1}
           mt={2}
@@ -66,7 +60,7 @@ const Cart = () => {
   );
 };
 
-const CartTable = ({ products, handleBuyAll }) => {
+const CartTable = ({ products }) => {
   return (
     <TableContainer>
       <Table>
@@ -90,12 +84,19 @@ const CartTable = ({ products, handleBuyAll }) => {
   );
 };
 
-const CartSummary = ({ onBuyAll }) => {
+// const CartSummary = ({ total }) => {
+const CartSummary = () => {
+  // const { handleBuyAll } = useGlobalContext();
   return (
     <div style={{ display: "flex", justifyContent: "center", marginTop: 20 }}>
-      <Button variant="contained" color="success" onClick={onBuyAll}>
+      <NavLink
+        to="../pay"
+        variant="contained"
+        color="success"
+        // onClick={() => handleBuyAll(total)}
+      >
         Buy All
-      </Button>
+      </NavLink>
     </div>
   );
 };

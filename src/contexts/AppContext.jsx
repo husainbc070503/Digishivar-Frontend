@@ -3,6 +3,7 @@ import AppReducer from "../reducers/AppReducer";
 import { api } from "../utils/Api";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import logo from "../assets/logo.jpeg";
 
 const Context = createContext();
 const initialState = {
@@ -397,6 +398,68 @@ const AppContext = ({ children }) => {
   const handleChangeUserQuantityType = (id, value) =>
     dispatch({ type: "CHANGE_QUANTITY_TYPE", payload: { id, value } });
 
+  const handleBuyAll = async (amount) => {
+    console.log("Buying all products");
+
+    try {
+      const rzp = await fetch(`${api}/api/getkey`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${state.user.token}`,
+        },
+      });
+      const raz = await rzp.json();
+
+      const res = await fetch(`${api}/api/payment/checkout`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${state.user.token}`,
+        },
+        body: JSON.stringify({ amount }),
+      });
+
+      if (!res.ok) {
+        throw new Error("Failed to fetch");
+      }
+
+      const data = await res.json();
+      // console.log(data);
+
+      const options = {
+        key: raz.key, // Enter the Key ID generated from the Dashboard
+        amount: data.order.amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+        currency: "INR",
+        name: "DigiShivar",
+        description: "A farmers world!",
+        image: logo,
+        order_id: data.order.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+        callback_url: "http://localhost:2704/api/payment/paymentverification",
+        prefill: {
+          name: "Ritika",
+          email: "ritika@gmail.com",
+          contact: "9370064905",
+        },
+        // handler: function (response) {
+        //   alert(response.razorpay_payment_id);
+        //   alert(response.razorpay_order_id);
+        //   alert(response.razorpay_signature);
+        // },
+        notes: {
+          address: "Razorpay Corporate Office",
+        },
+        theme: {
+          color: "#3399cc",
+        },
+      };
+      const razor = new window.Razorpay(options);
+      razor.open();
+    } catch (error) {
+      console.error("Error while buying products:", error);
+    }
+  };
+
   /* WishList */
   const addToWishlist = (productId) => {
     const listOfProducts = state.products.find(
@@ -711,6 +774,7 @@ const AppContext = ({ children }) => {
         handleChangeUserQuantityType,
         removeFromList,
         readReview,
+        handleBuyAll,
       }}
     >
       {children}
