@@ -14,6 +14,7 @@ const initialState = {
   blogs: [],
   cart: [],
   contacts: [],
+  wishlist: [],
 };
 
 const AppContext = ({ children }) => {
@@ -376,7 +377,7 @@ const AppContext = ({ children }) => {
     );
     if (listOfProducts) {
       dispatch({ type: "ADD_TO_LIST", payload: listOfProducts });
-      updateLocalStorage("wishlist", [...state.cart, listOfProducts]);
+      updateLocalStorage("wishlist", [...state.wishlist, listOfProducts]);
       toast.success("Product added to Wishlist", {
         position: "top-right",
         autoClose: 2000,
@@ -557,6 +558,8 @@ const AppContext = ({ children }) => {
       });
     }
   };
+
+  /* Review */
 
   /* Contacts */
   const fetchContacts = async (req, res) => {

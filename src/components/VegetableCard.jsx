@@ -28,7 +28,7 @@ const VegetableCard = ({ item }) => {
     category,
     rating,
   } = item;
-  const { user, addToCart, addToWishlist } = useGlobalContext();
+  const { user, addToCart, addToWishlist, readReview } = useGlobalContext();
 
   const handleAddToCart = (productId) => {
     addToCart(productId);
@@ -36,6 +36,10 @@ const VegetableCard = ({ item }) => {
 
   const handleAddToWishlist = (productId) => {
     addToWishlist(productId);
+  };
+
+  const handleReview = (productId) => {
+    readReview(productId);
   };
 
   return (
@@ -85,7 +89,10 @@ const VegetableCard = ({ item }) => {
           </Grid>
           <Grid item md={6} xs={6} textAlign="end">
             <Tooltip title="Reviews">
-              <ReviewsIcon className="icon mx-1 fs-5 text-secondary" />
+              <ReviewsIcon
+                className="icon mx-1 fs-5 text-secondary"
+                onClick={handleReview}
+              />
             </Tooltip>
 
             {user?.user ? (

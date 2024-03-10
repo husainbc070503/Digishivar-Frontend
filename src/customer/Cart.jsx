@@ -1,5 +1,3 @@
-// cart.jsx
-
 import * as React from "react";
 import {
   Avatar,
