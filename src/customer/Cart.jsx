@@ -61,7 +61,7 @@ const Cart = () => {
 };
 
 const CartTable = ({ products }) => {
-  return (
+  return products?.length > 0 ? (
     <TableContainer>
       <Table>
         <TableHead>
@@ -81,6 +81,10 @@ const CartTable = ({ products }) => {
         </TableBody>
       </Table>
     </TableContainer>
+  ) : (
+    <Typography fontWeight="bold" fontSize={20}>
+      No products added to cart
+    </Typography>
   );
 };
 

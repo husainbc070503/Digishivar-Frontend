@@ -1,7 +1,7 @@
 import { Box, Container, Grid, Typography } from "@mui/material";
 import React from "react";
 import { useGlobalContext } from "../contexts/AppContext";
-import { CustBlogCard } from "../components/BlogCard";
+import BlogCard from "../components/BlogCard";
 
 const Blogs = () => {
   const { blogs } = useGlobalContext();
@@ -25,7 +25,7 @@ const Blogs = () => {
           <Grid container spacing={2}>
             {blogs?.map((item, ind) => (
               <Grid item md={4} xs={12} key={ind}>
-                <CustBlogCard item={item} />
+                <BlogCard item={item} />
               </Grid>
             ))}
           </Grid>

@@ -36,7 +36,7 @@ const Wishlist = () => {
 };
 
 const WishTable = ({ products }) => {
-  return (
+  return products?.length > 0 ? (
     <TableContainer>
       <Table>
         <TableHead>
@@ -49,12 +49,16 @@ const WishTable = ({ products }) => {
           <Data align="center" text="Delete" />
         </TableHead>
         <TableBody>
-          {products.map((product, index) => (
-            <WishRow key={product._id} product={product} index={index + 1} />
+          {products?.map((product, index) => (
+            <WishRow key={product?._id} product={product} index={index + 1} />
           ))}
         </TableBody>
       </Table>
     </TableContainer>
+  ) : (
+    <Typography fontWeight="bold" fontSize={20}>
+      No products under wishlist
+    </Typography>
   );
 };
 
