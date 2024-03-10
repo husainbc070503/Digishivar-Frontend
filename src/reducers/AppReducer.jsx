@@ -25,7 +25,74 @@ const AppReducer = (state, action) => {
       return { ...state, wishlist: [...action.payload] };
 
     case "ADD_TO_CART":
-      return { ...state, cart: [...state.cart, action.payload] };
+      return {
+        ...state,
+        cart: [
+          ...state.cart,
+          {
+            ...action.payload.productToAdd,
+            userQuantity: action.payload.quantity,
+            userQuantityType: action.payload.quantityType,
+          },
+        ],
+      };
+
+    case "INCREMENT_QUANTITY":
+      let tempCart = state.cart;
+      tempCart = tempCart.map((item) => {
+        if (item?._id === action.payload.id) {
+          return {
+            ...item,
+            userQuantity:
+              item.userQuantity + 1 < action.payload.quantity
+                ? item.userQuantity + 1
+                : action.payload.quantity,
+          };
+        }
+
+        return item;
+      });
+
+      return {
+        ...state,
+        cart: tempCart,
+      };
+
+    case "DECREMENT_QUANTITY":
+      let tempCart1 = state.cart;
+      tempCart1 = tempCart1.map((item) => {
+        if (item?._id === action.payload) {
+          return {
+            ...item,
+            userQuantity: item.userQuantity - 1 > 1 ? item.userQuantity - 1 : 1,
+          };
+        }
+
+        return item;
+      });
+
+      return {
+        ...state,
+        cart: tempCart1,
+      };
+
+    case "CHANGE_QUANTITY_TYPE":
+      let tempCart2 = state.cart;
+      tempCart2 = tempCart2.map((item) => {
+        if (item?._id === action.payload.id) {
+          return {
+            ...item,
+            userQuantityType: action.payload.value,
+          };
+        }
+
+        return item;
+      });
+
+      return {
+        ...state,
+        cart: tempCart2,
+      };
 
     case "ADD_TO_LIST":
       return { ...state, wishlist: [...state.wishlist, action.payload] };

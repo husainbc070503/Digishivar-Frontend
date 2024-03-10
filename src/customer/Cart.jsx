@@ -2,7 +2,6 @@ import * as React from "react";
 import {
   Avatar,
   Container,
-  Grid,
   Table,
   TableBody,
   TableContainer,
@@ -15,26 +14,53 @@ import { useGlobalContext } from "../contexts/AppContext";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import Data from "../components/Data";
 import DeleteIcon from "@mui/icons-material/Delete";
+import AddIcon from "@mui/icons-material/Add";
+import RemoveIcon from "@mui/icons-material/Remove";
+import SelectField from "../components/SelectField";
 
 const Cart = () => {
-  const { cart } = useGlobalContext();
+  const { cart, prices } = useGlobalContext();
 
   const handleBuyAll = () => {
     // Implement logic for buying all products
     console.log("Buying all products");
   };
 
+  const totalPrice = () => {
+    var sum = 0;
+
+    cart?.forEach((item) => {
+      const actualPriceOfProduct = prices?.filter((e) =>
+        e?.vegetable?.includes(item?.vegetable)
+      )[0]?.wholesalePrice;
+
+      if (item.userQuantityType === "quintal")
+        sum += item.userQuantity * actualPriceOfProduct * 100;
+      else sum += item.userQuantity * actualPriceOfProduct;
+    });
+
+    return sum;
+  };
+
   return (
     <Container maxWidth="xl" className="container">
-      <Grid container spacing={2} my={1}>
-        <Grid item md={6} xs={12}>
-          <Typography fontSize={35} fontWeight="bold" color="primary">
-            <ShoppingCartIcon className="text-dark fs-3 me-2" /> My Cart
-          </Typography>
-        </Grid>
-      </Grid>
+      <Typography fontSize={35} fontWeight="bold" color="primary">
+        <ShoppingCartIcon className="text-dark fs-3 me-2" /> My Cart
+      </Typography>
       <div className="cart-container">
         <CartTable products={cart} handleBuyAll={handleBuyAll} />
+      </div>
+      <div className="d-flex align-items-center">
+        <CartSummary onBuyAll={handleBuyAll} />
+        <Typography
+          ml={1}
+          mt={2}
+          fontSize={20}
+          fontWeight="bold"
+          className="badge bg-primary"
+        >
+          Total Price: &#8377;{totalPrice()}
+        </Typography>
       </div>
     </Container>
   );
@@ -48,18 +74,16 @@ const CartTable = ({ products, handleBuyAll }) => {
           <Data align="center" text="Sr.No." />
           <Data align="center" text="Image" />
           <Data align="center" text="Vegetable" />
-          <Data align="center" text="Quantity" />
+          <Data align="center" text="Quantity" width={100} />
           <Data align="center" text="Quantity Type" />
           <Data align="center" text="Category" />
           <Data align="center" text="Price" />
-          <Data align="center" text="Total Price" />
           <Data align="center" text="Action" />
         </TableHead>
         <TableBody>
           {products.map((product, index) => (
             <CartRow key={product._id} product={product} index={index + 1} />
           ))}
-          <CartSummary onBuyAll={handleBuyAll} />
         </TableBody>
       </Table>
     </TableContainer>
@@ -69,7 +93,7 @@ const CartTable = ({ products, handleBuyAll }) => {
 const CartSummary = ({ onBuyAll }) => {
   return (
     <div style={{ display: "flex", justifyContent: "center", marginTop: 20 }}>
-      <Button variant="contained" color="primary" onClick={onBuyAll}>
+      <Button variant="contained" color="success" onClick={onBuyAll}>
         Buy All
       </Button>
     </div>
@@ -77,29 +101,27 @@ const CartSummary = ({ onBuyAll }) => {
 };
 
 const CartRow = ({ product, index }) => {
-  const { vegetable, img, price, category } = product;
-  const [quantityType, setQuantityType] = React.useState("kg");
-  const [quantity, setQuantity] = React.useState(1);
-  const [calculatedPrice, setCalculatedPrice] = React.useState(0);
+  const {
+    prices,
+    removeFromCart,
+    incrementQuantity,
+    decrementQuantity,
+    handleChangeUserQuantityType,
+  } = useGlobalContext();
 
-  React.useEffect(() => {
-    // Calculate price dynamically based on quantity and quantity type
-    let newCalculatedPrice;
-    if (quantityType === "kg") {
-      newCalculatedPrice = price * quantity;
-    } else {
-      newCalculatedPrice = price * quantity * 100;
-    }
-    setCalculatedPrice(newCalculatedPrice);
-  }, [quantity, quantityType, price]);
+  const {
+    _id,
+    vegetable,
+    img,
+    category,
+    userQuantity,
+    userQuantityType,
+    quantity,
+  } = product;
 
-  const handleQuantityChange = (event) => {
-    setQuantity(event.target.value);
-  };
-
-  const handleQuantityTypeChange = (event) => {
-    setQuantityType(event.target.value);
-  };
+  const actualPriceOfProduct = prices?.filter((item) =>
+    item?.vegetable?.includes(vegetable)
+  )[0]?.wholesalePrice;
 
   return (
     <TableRow key={index}>
@@ -112,30 +134,64 @@ const CartRow = ({ product, index }) => {
       <Data
         align="center"
         text={
-          <input
-            type="number"
-            value={quantity}
-            onChange={handleQuantityChange}
-          />
+          <div className="d-flex align-items-center justify-content-between">
+            <RemoveIcon
+              onClick={() => decrementQuantity(_id)}
+              className="icon fs-5"
+            />
+            <Typography fontSize={25} fontWeight="bold">
+              {userQuantity}
+            </Typography>
+            <AddIcon
+              onClick={() => incrementQuantity(_id, quantity)}
+              className="fs-5 icon"
+            />
+          </div>
         }
       />
       <Data
         align="center"
         text={
-          <select
-            value={quantityType}
-            onChange={handleQuantityTypeChange}
-            fontSize={6}
-          >
-            <option value="kg">Kg</option>
-            <option value="quintal">Quintal</option>
-          </select>
+          userQuantityType === "quintal" ? (
+            <SelectField
+              value={userQuantityType}
+              arr={["quintal", "kg"]}
+              onChange={(e) =>
+                handleChangeUserQuantityType(_id, e.target.value)
+              }
+            />
+          ) : (
+            userQuantityType.toUpperCase()
+          )
+        }
+        fromData={true}
+      />
+      <Data
+        align="center"
+        text={category[0].toUpperCase() + category.substring(1)}
+        fromData={true}
+      />
+      <Data
+        align="center"
+        text={
+          <span className="badge bg-info fs-5">
+            &#8377;
+            {userQuantityType === "quintal"
+              ? userQuantity * actualPriceOfProduct * 100
+              : userQuantity * actualPriceOfProduct}
+          </span>
         }
       />
-      <Data align="center" text={category} fromData={true} />
-      <Data align="center" text={price} />
-      <Data align="center" text={calculatedPrice} />
-      <Data align="center" text={<DeleteIcon />} />
+      <Data
+        align="center"
+        text={
+          <DeleteIcon
+            className="fs-5 icon"
+            color="error"
+            onClick={() => removeFromCart(_id)}
+          />
+        }
+      />
     </TableRow>
   );
 };
