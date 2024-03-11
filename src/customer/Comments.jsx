@@ -78,7 +78,12 @@ const Comments = ({ id, comments, role }) => {
                   >
                     Add
                   </Button>
-                  <Button color="error" variant="contained" className="ms-3">
+                  <Button
+                    color="error"
+                    variant="contained"
+                    className="ms-3"
+                    onClick={() => setOpenCommentBox(false)}
+                  >
                     Cancel
                   </Button>
                 </div>

@@ -62,9 +62,6 @@ const Navbar = () => {
                 </>
               ) : (
                 <>
-                  <NavLink to="../profile" className="nav-link">
-                    Profile
-                  </NavLink>
                   <NavLink to="../readblogs" className="nav-link">
                     Blogs
                   </NavLink>
@@ -78,6 +75,9 @@ const Navbar = () => {
                     <Badge badgeContent={wishlist.length} color="secondary">
                       <WishListIcon />
                     </Badge>
+                  </NavLink>
+                  <NavLink to="../orderHistory" className="nav-link">
+                    Order History
                   </NavLink>
                 </>
               )

@@ -1,6 +1,7 @@
 import * as React from "react";
 import {
   Avatar,
+  Button,
   Container,
   Table,
   TableBody,
@@ -20,13 +21,12 @@ import { NavLink } from "react-router-dom";
 
 const Cart = () => {
   const { cart, prices } = useGlobalContext();
-
   const totalPrice = () => {
     var sum = 0;
 
     cart?.forEach((item) => {
       const actualPriceOfProduct = prices?.filter((e) =>
-        e?.vegetable?.includes(item?.vegetable)
+        e?.vegetable.toLowerCase()?.includes(item?.vegetable.toLowerCase())
       )[0]?.wholesalePrice;
 
       if (item.userQuantityType === "quintal")
@@ -44,18 +44,14 @@ const Cart = () => {
       <div className="cart-container">
         <CartTable products={cart} />
       </div>
-      <div className="d-flex align-items-center">
-        <CartSummary total={totalPrice()} />
-        <Typography
-          ml={1}
-          mt={2}
-          fontSize={20}
-          fontWeight="bold"
-          className="badge bg-primary"
-        >
-          Total Price: &#8377;{totalPrice()}
-        </Typography>
-      </div>
+      {cart?.length > 0 && (
+        <div className="d-flex align-items-center mt-4">
+          <CartSummary total={totalPrice()} />
+          <Button color="info" variant="contained" className="ms-2">
+            Total Price: &#8377;{totalPrice()}
+          </Button>
+        </div>
+      )}
     </Container>
   );
 };
@@ -88,20 +84,18 @@ const CartTable = ({ products }) => {
   );
 };
 
-// const CartSummary = ({ total }) => {
 const CartSummary = () => {
-  // const { handleBuyAll } = useGlobalContext();
   return (
-    <div style={{ display: "flex", justifyContent: "center", marginTop: 20 }}>
+    <Button color="success" variant="contained">
       <NavLink
         to="../pay"
         variant="contained"
         color="success"
-        // onClick={() => handleBuyAll(total)}
+        style={{ textDecoration: "none", color: "#fff" }}
       >
         Buy All
       </NavLink>
-    </div>
+    </Button>
   );
 };
 
@@ -125,7 +119,7 @@ const CartRow = ({ product, index }) => {
   } = product;
 
   const actualPriceOfProduct = prices?.filter((item) =>
-    item?.vegetable?.includes(vegetable)
+    item?.vegetable.toLowerCase()?.includes(vegetable.toLowerCase())
   )[0]?.wholesalePrice;
 
   return (

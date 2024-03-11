@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useEffect, useReducer } from "react";
 import AppReducer from "../reducers/AppReducer";
 import { api } from "../utils/Api";
-import { toast } from "react-toastify";
+import { Zoom, toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import logo from "../assets/logo.jpeg";
 
@@ -395,7 +395,100 @@ const AppContext = ({ children }) => {
   const handleChangeUserQuantityType = (id, value) =>
     dispatch({ type: "CHANGE_QUANTITY_TYPE", payload: { id, value } });
 
-  const handleBuyAll = async (amount) => {
+  /* Order */
+  const fetchOrders = async () => {
+    try {
+      const res = await fetch(`${api}/api/order/orders`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${state.user.token}`,
+        },
+      });
+
+      const data = await res.json();
+      if (data.success) dispatch({ type: "SET_ORDERS", payload: data.orders });
+    } catch (error) {
+      toast.error(error.message, {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+    }
+  };
+
+  const addOrder = async (
+    totalPrice,
+    transportationRequired,
+    paymentMode,
+    paymentStatus
+  ) => {
+    const tempProducts = state.cart.map((item) => {
+      return {
+        pro: item?._id,
+        userQuantity: item?.userQuantity,
+        userQuantityType: item?.userQuantityType,
+      };
+    });
+
+    console.log(totalPrice, transportationRequired, paymentMode, paymentStatus);
+
+    try {
+      const res = await fetch(`${api}/api/order/placeOrder`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${state.user.token}`,
+        },
+        body: JSON.stringify({
+          products: tempProducts,
+          totalPrice,
+          transportationRequired,
+          paymentMode,
+          paymentStatus,
+        }),
+      });
+
+      const data = await res.json();
+      if (data.success && !paymentStatus) {
+        toast.success("Order placed", {
+          position: "top-right",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+      }
+
+      if (data.success) {
+        dispatch({ type: "ADD_ORDER", payload: data.order });
+        dispatch({ type: "CLEAR_CART" });
+        localStorage.removeItem("d-ecomm-cart");
+        navigate("../orderHistory");
+      }
+    } catch (error) {
+      toast.error(error.message, {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+    }
+  };
+
+  const handleBuyAll = async (amount, transportationRequired, paymentMode) => {
     console.log("Buying all products");
 
     try {
@@ -432,17 +525,53 @@ const AppContext = ({ children }) => {
         description: "A farmers world!",
         image: logo,
         order_id: data.order.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
-        callback_url: "http://localhost:2704/api/payment/paymentverification",
         prefill: {
           name: "Ritika",
           email: "ritika@gmail.com",
           contact: "9370064905",
         },
-        // handler: function (response) {
-        //   alert(response.razorpay_payment_id);
-        //   alert(response.razorpay_order_id);
-        //   alert(response.razorpay_signature);
-        // },
+        handler: async (response) => {
+          await addOrder(amount, transportationRequired, paymentMode, true);
+
+          toast.info(`Payment Id: ${response.razorpay_payment_id}`, {
+            position: "top-right",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+            transition: Zoom,
+          });
+
+          toast.info(`Order Id: ${response.razorpay_order_id}`, {
+            position: "top-right",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+            transition: Zoom,
+          });
+
+          toast.success(
+            "Thank you for purchasing our products. Your product will be delivered soon to your address.",
+            {
+              position: "top-right",
+              autoClose: 3000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "colored",
+              transition: Zoom,
+            }
+          );
+        },
         notes: {
           address: "Razorpay Corporate Office",
         },
@@ -1032,6 +1161,7 @@ const AppContext = ({ children }) => {
     fetchBlogs();
     fetchUsers();
     fetchContacts();
+    fetchOrders();
   }, [state.user]);
 
   useEffect(() => {
@@ -1076,6 +1206,8 @@ const AppContext = ({ children }) => {
         dislikeBlog,
         addComment,
         deleteComment,
+        handleBuyAll,
+        addOrder,
       }}
     >
       {children}

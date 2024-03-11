@@ -9,31 +9,31 @@ const FeaturesData = [
   {
     id: 1,
     title: "Online Shopping",
-    desc: "Communicate and Collaborate with your team members.",
+    desc: "Get fresh vegetable direct from farmers through this ecommerce web app.",
     img: Img1,
   },
   {
     id: 2,
     title: "Bulk Ordering",
-    desc: "Track the progress of tasks efficiently.",
+    desc: "You can order in bulk quantity like in Quintal.",
     img: Img2,
   },
   {
     id: 3,
     title: "Blogging",
-    desc: "Proper assistance from the guide for efficient development of project.",
+    desc: "Farmers can post their blog to share their knowlegde and learn from other.",
     img: Img3,
   },
   {
     id: 4,
     title: "No Mediators",
-    desc: "Assign tasks to each team member and handle it efficiently.",
+    desc: "Farmers will get maximum profit as no mediators charge will be there.",
     img: Img4,
   },
   {
     id: 5,
     title: "Notification Alerts",
-    desc: "Automated notifications for task deadlines, updates, etc.",
+    desc: "Automated notifications for order confirmation, updates, etc.",
     img: Img5,
   },
   {

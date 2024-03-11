@@ -118,6 +118,9 @@ const AppReducer = (state, action) => {
         cart: state.cart.filter((product) => product._id !== action.payload),
       };
 
+    case "CLEAR_CART":
+      return { ...state, cart: [] };
+
     case "REMOVE_FROM_LIST":
       return {
         ...state,
@@ -154,6 +157,18 @@ const AppReducer = (state, action) => {
       return {
         ...state,
         contacts: state.contacts.filter((item) => item?._id !== action.payload),
+      };
+
+    case "SET_ORDERS":
+      return {
+        ...state,
+        orders: [...action.payload],
+      };
+
+    case "ADD_ORDER":
+      return {
+        ...state,
+        orders: [...state.orders, action.payload],
       };
 
     default:

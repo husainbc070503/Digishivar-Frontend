@@ -82,7 +82,12 @@ const Reviews = ({ id, reviews, role }) => {
                   >
                     Add
                   </Button>
-                  <Button color="error" variant="contained" className="ms-3">
+                  <Button
+                    color="error"
+                    variant="contained"
+                    className="ms-3"
+                    onClick={() => setOpenReview(false)}
+                  >
                     Cancel
                   </Button>
                 </div>
