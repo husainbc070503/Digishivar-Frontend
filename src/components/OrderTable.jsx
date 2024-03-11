@@ -6,9 +6,11 @@ import {
   TableHead,
   TableRow,
   Tooltip,
+  Button,
 } from "@mui/material";
 import React from "react";
 import Data from "./Data";
+import DownloadIcon from "@mui/icons-material/Download";
 
 const OrderTable = ({ orders }) => {
   return (
@@ -51,15 +53,7 @@ const OrderTable = ({ orders }) => {
                     </div>
                   }
                 />
-                <Data
-                  fromData={true}
-                  align="center"
-                  text={
-                    <span className="badge bg-success fs-4">
-                      &#8377;{totalPrice}
-                    </span>
-                  }
-                />
+                <Data fromData={true} align="center" text={totalPrice} />
                 <Data
                   fromData={true}
                   align="center"
@@ -77,6 +71,15 @@ const OrderTable = ({ orders }) => {
                   fromData={true}
                   align="center"
                   text={paymentStatus ? "Successful" : "Pending"}
+                />
+                <Data
+                  fromData={true}
+                  align="center"
+                  text={
+                    <Button>
+                      <DownloadIcon />
+                    </Button>
+                  }
                 />
               </TableRow>
             );
