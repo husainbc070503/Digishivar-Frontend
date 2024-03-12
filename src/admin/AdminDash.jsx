@@ -49,7 +49,7 @@ const AdminDash = () => {
       length: orders?.length,
       icon: <PaymentIcon sx={style} />,
       color: "info",
-      link: "orders",
+      link: "adminOrders",
     },
     {
       title: "QnA",

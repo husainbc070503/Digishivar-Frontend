@@ -18,6 +18,8 @@ import Cart from "./customer/Cart";
 import Wishlist from "./customer/Wishlist";
 import TransportSelection from "./customer/TransportSelection";
 import OrderHistory from "./customer/OrderHistory";
+import Orders from "./farmer/Orders";
+import AdminOrders from "./admin/AdminOrders";
 
 const App = () => {
   const theme = createTheme({
@@ -49,6 +51,8 @@ const App = () => {
             <Route path="/wishlist" element={<Wishlist />} />
             <Route path="/pay" element={<TransportSelection />} />
             <Route path="/orderHistory" element={<OrderHistory />} />
+            <Route path="/orders" element={<Orders />} />
+            <Route path="/adminOrders" element={<AdminOrders />} />
 
             {/* ADMIN */}
             <Route path="/customers" element={<Customers />} />

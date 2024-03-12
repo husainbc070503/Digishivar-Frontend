@@ -171,6 +171,15 @@ const AppReducer = (state, action) => {
         orders: [...state.orders, action.payload],
       };
 
+    case "CHANGE_STATUS":
+      let tempOrders = state.orders;
+      tempOrders = tempOrders.map((item) => {
+        if (item._id === action.payload.id) return action.payload.order;
+        return item;
+      });
+
+      return { ...state, orders: tempOrders };
+
     default:
       return state;
   }

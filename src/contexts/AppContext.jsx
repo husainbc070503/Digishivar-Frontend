@@ -436,8 +436,6 @@ const AppContext = ({ children }) => {
       };
     });
 
-    console.log(totalPrice, transportationRequired, paymentMode, paymentStatus);
-
     try {
       const res = await fetch(`${api}/api/order/placeOrder`, {
         method: "POST",
@@ -451,6 +449,7 @@ const AppContext = ({ children }) => {
           transportationRequired,
           paymentMode,
           paymentStatus,
+          farmer: state.cart[0].user._id,
         }),
       });
 
@@ -583,6 +582,56 @@ const AppContext = ({ children }) => {
       razor.open();
     } catch (error) {
       console.error("Error while buying products:", error);
+    }
+  };
+
+  const handleChangeStatus = async (id) => {
+    try {
+      const res = await fetch(`${api}/api/order/changePaymentStatus/${id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${state.user.token}`,
+        },
+      });
+
+      const data = await res.json();
+      if (data.success) {
+        toast.success("Updated", {
+          position: "top-right",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+
+        dispatch({ type: "CHANGE_STATUS", payload: { id, order: data.order } });
+      } else {
+        toast.error(data.message, {
+          position: "top-right",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+      }
+    } catch (error) {
+      toast.error(error.message, {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
     }
   };
 
@@ -1208,6 +1257,7 @@ const AppContext = ({ children }) => {
         deleteComment,
         handleBuyAll,
         addOrder,
+        handleChangeStatus,
       }}
     >
       {children}

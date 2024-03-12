@@ -16,7 +16,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import { NavLink } from "react-router-dom";
 import Groups2Icon from "@mui/icons-material/Groups2";
 import AgricultureIcon from "@mui/icons-material/Agriculture";
-import PaymentIcon from '@mui/icons-material/Payment';
+import PaymentIcon from "@mui/icons-material/Payment";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import MessageIcon from "@mui/icons-material/Message";
 
@@ -77,7 +77,10 @@ const SideDrawer = () => {
             <List>
               {["customers", "farmers", "products", "orders", "qna"].map(
                 (text, index) => (
-                  <NavLink className="nav-side-link" to={text}>
+                  <NavLink
+                    className="nav-side-link"
+                    to={text === "orders" ? "adminOrders" : text}
+                  >
                     <ListItem key={text} disablePadding className="ListItem">
                       <ListItemButton>
                         <ListItemIcon className="ListItemIcon">

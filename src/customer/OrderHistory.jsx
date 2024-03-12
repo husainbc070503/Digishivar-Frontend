@@ -11,7 +11,7 @@ const OrderHistory = () => {
   );
 
   return (
-    <Container maxWidth="container" className="container">
+    <Container maxWidth="xl" className="container">
       <Box>
         <Typography fontSize={35} fontWeight="bold" color="primary" mb={1}>
           <PaymentIcon className="text-dark fs-3 me-2" /> My Past Orders

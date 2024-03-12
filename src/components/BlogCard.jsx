@@ -15,10 +15,8 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import Comments from "../customer/Comments";
 
 const BlogCard = ({ item }) => {
-  console.log(item);
   const { deleteBlog, user, likeBlog, dislikeBlog } = useGlobalContext();
   const { _id, image, title, description, likes, comments } = item;
-  console.log(likes);
 
   return (
     <Card>
@@ -65,6 +63,13 @@ const BlogCard = ({ item }) => {
               </div>
             </Tooltip>
           </Grid>
+          {user?.user?.role === "customer" && (
+            <Grid item md={6} xs={6}>
+              <Typography color="GrayText" textAlign="end">
+                ~by {item.user.name}
+              </Typography>
+            </Grid>
+          )}
           {user?.user?.role === "farmer" && (
             <Grid item md={6} xs={6} textAlign="end">
               <Tooltip title="Edit">

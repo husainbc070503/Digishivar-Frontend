@@ -19,6 +19,7 @@ const OrderTable = ({ orders }) => {
             <Data align="center" text="Sr.No." />
             <Data align="left" text="Products" />
             <Data align="center" text="Amount Paid" />
+            <Data align="center" text="Farmer" />
             <Data align="center" text="Transportation Mode" />
             <Data align="center" text="Payment Mode" />
             <Data align="center" text="Payment Status" />
@@ -33,6 +34,7 @@ const OrderTable = ({ orders }) => {
               transportationRequired,
               paymentMode,
               paymentStatus,
+              farmer,
             } = item;
 
             return (
@@ -55,11 +57,12 @@ const OrderTable = ({ orders }) => {
                   fromData={true}
                   align="center"
                   text={
-                    <span className="badge bg-success fs-4">
+                    <span className="badge bg-success fs-5">
                       &#8377;{totalPrice}
                     </span>
                   }
                 />
+                <Data fromData={true} align="center" text={farmer?.name} />
                 <Data
                   fromData={true}
                   align="center"
@@ -78,6 +81,7 @@ const OrderTable = ({ orders }) => {
                   align="center"
                   text={paymentStatus ? "Successful" : "Pending"}
                 />
+                <Data align="center" fromData={true} text="Download Receipt" />
               </TableRow>
             );
           })}
