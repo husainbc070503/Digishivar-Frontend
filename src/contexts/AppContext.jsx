@@ -433,6 +433,7 @@ const AppContext = ({ children }) => {
         pro: item?._id,
         userQuantity: item?.userQuantity,
         userQuantityType: item?.userQuantityType,
+        user: item?.user,
       };
     });
 
