@@ -61,25 +61,27 @@ const Navbar = () => {
                   </NavLink>
                 </>
               ) : (
-                <>
-                  <NavLink to="../readblogs" className="nav-link">
-                    Blogs
-                  </NavLink>
-                  <NavLink to="../cart" className="nav-link">
-                    <Badge badgeContent={cart.length} color="secondary">
-                      <ShoppingCartCheckoutIcon />
-                    </Badge>
-                  </NavLink>
+                user?.user?.role === "customer" && (
+                  <>
+                    <NavLink to="../readblogs" className="nav-link">
+                      Blogs
+                    </NavLink>
+                    <NavLink to="../cart" className="nav-link">
+                      <Badge badgeContent={cart.length} color="secondary">
+                        <ShoppingCartCheckoutIcon />
+                      </Badge>
+                    </NavLink>
 
-                  <NavLink to="../wishlist" className="nav-link">
-                    <Badge badgeContent={wishlist.length} color="secondary">
-                      <WishListIcon />
-                    </Badge>
-                  </NavLink>
-                  <NavLink to="../orderHistory" className="nav-link">
-                    Order History
-                  </NavLink>
-                </>
+                    <NavLink to="../wishlist" className="nav-link">
+                      <Badge badgeContent={wishlist.length} color="secondary">
+                        <WishListIcon />
+                      </Badge>
+                    </NavLink>
+                    <NavLink to="../orderHistory" className="nav-link">
+                      Order History
+                    </NavLink>
+                  </>
+                )
               )
             ) : (
               <Button variant="contained" color="secondary">

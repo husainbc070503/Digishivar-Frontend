@@ -19,6 +19,7 @@ import AgricultureIcon from "@mui/icons-material/Agriculture";
 import PaymentIcon from "@mui/icons-material/Payment";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import MessageIcon from "@mui/icons-material/Message";
+import HistoryEduIcon from "@mui/icons-material/HistoryEdu";
 
 const SideDrawer = () => {
   const [open, setOpen] = React.useState(false);
@@ -75,35 +76,48 @@ const SideDrawer = () => {
             </List>
             <Divider />
             <List>
-              {["customers", "farmers", "products", "orders", "qna"].map(
-                (text, index) => (
-                  <NavLink
-                    className="nav-side-link"
-                    to={text === "orders" ? "adminOrders" : text}
-                  >
-                    <ListItem key={text} disablePadding className="ListItem">
-                      <ListItemButton>
-                        <ListItemIcon className="ListItemIcon">
-                          {index === 0 ? (
-                            <Groups2Icon className="fs-5" />
-                          ) : index === 1 ? (
-                            <AgricultureIcon className="fs-5" />
-                          ) : index === 2 ? (
-                            <ShoppingCartIcon className="fs-5" />
-                          ) : index === 3 ? (
-                            <PaymentIcon className="fs-5" />
-                          ) : (
-                            <MessageIcon className="fs-5" />
-                          )}
-                        </ListItemIcon>
-                        <ListItemText
-                          primary={text[0].toUpperCase() + text.substring(1)}
-                        />
-                      </ListItemButton>
-                    </ListItem>
-                  </NavLink>
-                )
-              )}
+              {[
+                "customers",
+                "farmers",
+                "products",
+                "orders",
+                "blogs",
+                "qna",
+              ].map((text, index) => (
+                <NavLink
+                  className="nav-side-link"
+                  to={
+                    text === "orders"
+                      ? "adminOrders"
+                      : text === "blogs"
+                      ? "adminBlogs"
+                      : text
+                  }
+                >
+                  <ListItem key={text} disablePadding className="ListItem">
+                    <ListItemButton>
+                      <ListItemIcon className="ListItemIcon">
+                        {index === 0 ? (
+                          <Groups2Icon className="fs-5" />
+                        ) : index === 1 ? (
+                          <AgricultureIcon className="fs-5" />
+                        ) : index === 2 ? (
+                          <ShoppingCartIcon className="fs-5" />
+                        ) : index === 3 ? (
+                          <PaymentIcon className="fs-5" />
+                        ) : index === 4 ? (
+                          <HistoryEduIcon className="fs-5" />
+                        ) : (
+                          <MessageIcon className="fs-5" />
+                        )}
+                      </ListItemIcon>
+                      <ListItemText
+                        primary={text[0].toUpperCase() + text.substring(1)}
+                      />
+                    </ListItemButton>
+                  </ListItem>
+                </NavLink>
+              ))}
             </List>
           </Box>
         </Drawer>

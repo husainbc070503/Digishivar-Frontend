@@ -20,6 +20,7 @@ import TransportSelection from "./customer/TransportSelection";
 import OrderHistory from "./customer/OrderHistory";
 import Orders from "./farmer/Orders";
 import AdminOrders from "./admin/AdminOrders";
+import AdminBlogs from "./admin/AdminBlogs";
 
 const App = () => {
   const theme = createTheme({
@@ -53,6 +54,7 @@ const App = () => {
             <Route path="/orderHistory" element={<OrderHistory />} />
             <Route path="/orders" element={<Orders />} />
             <Route path="/adminOrders" element={<AdminOrders />} />
+            <Route path="/adminBlogs" element={<AdminBlogs />} />
 
             {/* ADMIN */}
             <Route path="/customers" element={<Customers />} />

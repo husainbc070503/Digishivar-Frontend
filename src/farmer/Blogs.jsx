@@ -46,7 +46,7 @@ const Blogs = () => {
         {myBlogs?.length > 0 ? (
           <Grid container spacing={2}>
             {myBlogs
-              ?.filter((item) => item?.title.toLowerCase().includes(search))
+              ?.filter((item) => item?.title?.toLowerCase().includes(search))
               ?.map((item, ind) => (
                 <Grid item md={4} xs={12} key={ind}>
                   <BlogCard item={item} />

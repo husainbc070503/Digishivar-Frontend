@@ -10,7 +10,6 @@ import { Grid, Tooltip } from "@mui/material";
 import { Link } from "react-router-dom";
 import { useGlobalContext } from "../contexts/AppContext";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
-
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import Comments from "../customer/Comments";
 
@@ -49,7 +48,7 @@ const BlogCard = ({ item }) => {
                 ) : (
                   <FavoriteIcon className="fs-5" />
                 )}
-                <span className="fs-5 ml-1">{likes?.length}</span>
+                <span className="ml-1">{likes?.length}</span>
               </div>
             </Tooltip>
             <Tooltip title="Comments">
@@ -59,7 +58,7 @@ const BlogCard = ({ item }) => {
                   role={user?.user?.role}
                   comments={comments}
                 />
-                <span className="fs-5 ml-1">{comments?.length}</span>
+                <span className="ml-1">{comments?.length}</span>
               </div>
             </Tooltip>
           </Grid>

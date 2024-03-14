@@ -30,7 +30,7 @@ const Comments = ({ id, comments, role }) => {
 
   return (
     <div className="d-inline-block">
-      <CommentIcon className="fs-4 icon" onClick={() => setOpen(true)} />
+      <CommentIcon className="fs-5 icon" onClick={() => setOpen(true)} />
       <Modal
         open={open}
         onClose={() => setOpen(false)}

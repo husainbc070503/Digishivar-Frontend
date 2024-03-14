@@ -5,20 +5,24 @@ import { Link } from "react-router-dom";
 import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
 import Groups2Icon from "@mui/icons-material/Groups2";
 import AgricultureIcon from "@mui/icons-material/Agriculture";
-import PaymentIcon from '@mui/icons-material/Payment';
+import PaymentIcon from "@mui/icons-material/Payment";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import MessageIcon from "@mui/icons-material/Message";
 import { useGlobalContext } from "../contexts/AppContext";
+import HistoryEduIcon from "@mui/icons-material/HistoryEdu";
 import "./Admin.css";
 
 const AdminDash = () => {
-  const { users, products, orders, contacts } = useGlobalContext();
+  const { users, products, orders, contacts, blogs } = useGlobalContext();
 
   const customers = users?.filter((item) => item?.role === "customer");
   const farmers = users?.filter((item) => item?.role === "farmer");
 
   const condition = (color) =>
-    color === "dark" || color === "success" || color === "danger";
+    color === "dark" ||
+    color === "success" ||
+    color === "danger" ||
+    color === "primary";
 
   const style = { fontSize: "4.5rem" };
 
@@ -50,6 +54,13 @@ const AdminDash = () => {
       icon: <PaymentIcon sx={style} />,
       color: "info",
       link: "adminOrders",
+    },
+    {
+      title: "Blogs",
+      length: blogs?.length,
+      icon: <HistoryEduIcon sx={style} />,
+      color: "primary",
+      link: "adminBlogs",
     },
     {
       title: "QnA",
