@@ -36,7 +36,6 @@ const ForgotPassword = () => {
   const [open, setOpen] = React.useState(false);
   const [passModal, setPassModal] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
-  const [show, setShow] = React.useState(false);
   const [details, setDetails] = React.useState(initialState);
 
   const handleChange = (e) =>
@@ -139,10 +138,10 @@ const ForgotPassword = () => {
     }
 
     try {
-      const res = await fetch(`${api}/api/user/changePassword`, {
+      const res = await fetch(`${api}/api/user/updatePassword`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(details),
+        body: JSON.stringify({ ...details, otp: parseInt(details.otp) }),
       });
 
       const data = await res.json();
@@ -159,6 +158,7 @@ const ForgotPassword = () => {
         });
         setPassModal(false);
         setOpen(false);
+        setDetails(initialState);
       } else {
         toast.error(data.message, {
           position: "top-right",
@@ -227,7 +227,7 @@ const ForgotPassword = () => {
           ) : (
             <>
               <OtpForm
-                length={4}
+                length={5}
                 onOtpSubmit={(otpVal) =>
                   setDetails({ ...details, otp: otpVal })
                 }

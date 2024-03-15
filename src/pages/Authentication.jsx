@@ -13,6 +13,7 @@ import RadioField from "../components/RadioField";
 import { useGlobalContext } from "../contexts/AppContext";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import ForgotPassword from "../components/ForgotPassword";
 
 const initialState = {
   name: "",
@@ -212,7 +213,7 @@ const Authentication = () => {
               loading={loading}
               handleSubmit={handleSubmit}
             />
-            {/* {!openReg && <ForgotPassword />} */}
+            {!openReg && <ForgotPassword />}
           </Box>
         </Grid>
       </Grid>
