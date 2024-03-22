@@ -41,7 +41,7 @@ const Hero = () => {
           </Button>
         </Grid>
         <Grid item md={6} xs={12}>
-          <img src={HeroImage} alt="frontimg" className="hero-img" />
+          <img src={HeroImage} alt="frontimg" className="hero-img image" />
         </Grid>
       </Grid>
     </div>

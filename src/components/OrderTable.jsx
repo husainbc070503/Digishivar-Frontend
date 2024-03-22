@@ -1,5 +1,6 @@
 import {
   Avatar,
+  Button,
   Table,
   TableBody,
   TableContainer,
@@ -9,6 +10,8 @@ import {
 } from "@mui/material";
 import React from "react";
 import Data from "./Data";
+import DownloadIcon from "@mui/icons-material/Download";
+import { Link } from "react-router-dom/dist";
 
 const OrderTable = ({ orders }) => {
   return (
@@ -17,7 +20,7 @@ const OrderTable = ({ orders }) => {
         <TableHead>
           <TableRow>
             <Data align="center" text="Sr.No." />
-            <Data align="left" text="Products" />
+            <Data align="center" text="Products" />
             <Data align="center" text="Amount Paid" />
             <Data align="center" text="Farmer" />
             <Data align="center" text="Transportation Mode" />
@@ -29,6 +32,7 @@ const OrderTable = ({ orders }) => {
         <TableBody>
           {orders?.map((item, ind) => {
             const {
+              _id,
               products,
               totalPrice,
               transportationRequired,
@@ -47,7 +51,11 @@ const OrderTable = ({ orders }) => {
                     <div className="d-flex mx-auto">
                       {products?.map((e) => (
                         <Tooltip title={e.pro.vegetable}>
-                          <Avatar src={e.pro.img} alt={e.pro.vegetable} />
+                          <Avatar
+                            src={e.pro.img}
+                            alt={e.pro.vegetable}
+                            className="d-block mx-auto"
+                          />
                         </Tooltip>
                       ))}
                     </div>
@@ -81,7 +89,20 @@ const OrderTable = ({ orders }) => {
                   align="center"
                   text={paymentStatus ? "Successful" : "Pending"}
                 />
-                <Data align="center" fromData={true} text="Download Receipt" />
+                <Data
+                  align="center"
+                  fromData={true}
+                  text={
+                    <Tooltip title="Print Invoice">
+                      <Link
+                        style={{ textDecoration: "none" }}
+                        to={`../generateInvoice/${_id}`}
+                      >
+                        <DownloadIcon color="success" />
+                      </Link>
+                    </Tooltip>
+                  }
+                />
               </TableRow>
             );
           })}

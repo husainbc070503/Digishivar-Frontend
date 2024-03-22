@@ -17,7 +17,7 @@ const About = () => {
         <SectionHeading title="About" />
         <Grid container spacing={3} alignItems="center">
           <Grid item md={4}>
-            <img src={AboutImg1} alt="about" />
+            <img src={AboutImg1} alt="about" className="image"/>
           </Grid>
           <Grid item md={8}>
             <Typography
@@ -45,7 +45,7 @@ const About = () => {
             </Typography>
           </Grid>
           <Grid item md={4}>
-            <img src={AboutImg2} alt="about" />
+            <img src={AboutImg2} alt="about" className="image"/>
           </Grid>
         </Grid>
       </div>

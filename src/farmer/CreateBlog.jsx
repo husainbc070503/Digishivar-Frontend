@@ -180,6 +180,7 @@ const CreateBlog = () => {
                 : NoImage
             }
             alt="image"
+            className="image"
           />
           <label htmlFor="add-product-image">
             <AddIcon />

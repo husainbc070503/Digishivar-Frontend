@@ -21,6 +21,9 @@ import OrderHistory from "./customer/OrderHistory";
 import Orders from "./farmer/Orders";
 import AdminOrders from "./admin/AdminOrders";
 import AdminBlogs from "./admin/AdminBlogs";
+import Invoice from "./components/Invoice";
+import InvoiceNew from "./components/InvoiceNew";
+import { useLocation } from "react-router-dom/dist";
 
 const App = () => {
   const theme = createTheme({
@@ -33,11 +36,18 @@ const App = () => {
     },
   });
 
+  const LocationNavbar = () => {
+    const location = useLocation();
+    if (location.pathname.includes('generateInvoice')) return null;
+
+    return <Navbar />;
+  };
+
   return (
     <ThemeProvider theme={theme}>
       <BrowserRouter>
         <AppContext>
-          <Navbar />
+          <LocationNavbar />
           <Routes>
             <Route path="/" element={<Index />} index />
             <Route path="/auth" element={<Authentication />} />
@@ -55,6 +65,8 @@ const App = () => {
             <Route path="/orders" element={<Orders />} />
             <Route path="/adminOrders" element={<AdminOrders />} />
             <Route path="/adminBlogs" element={<AdminBlogs />} />
+            <Route path="/generateInvoice/:id" element={<InvoiceNew />} />
+            {/* <Route path="/Invoice" element={<Invoice />} /> */}
 
             {/* ADMIN */}
             <Route path="/customers" element={<Customers />} />

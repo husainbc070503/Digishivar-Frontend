@@ -129,7 +129,7 @@ const Contact = () => {
               </div>
             </Grid>
             <Grid item md={6}>
-              <img src={ContactImg} alt="image" />
+              <img src={ContactImg} alt="image" className="image"/>
             </Grid>
           </Grid>
         </div>

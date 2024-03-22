@@ -134,7 +134,7 @@ const Orders = () => {
                               variant="contained"
                               onClick={() => handleChangeStatus(_id)}
                             >
-                              Yes Received
+                              Cash Received
                             </Button>
                           ) : (
                             <div className="fw-bold fs-6 text-center">Yes</div>

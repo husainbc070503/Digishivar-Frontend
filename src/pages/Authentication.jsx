@@ -133,7 +133,7 @@ const Authentication = () => {
       <Grid container spacing={6} alignItems="center">
         <Grid item md={5} xs={12}>
           <div className="auth-imag">
-            <img src={openReg ? RegisterImg : LoginImg} alt="image" />
+            <img src={openReg ? RegisterImg : LoginImg} alt="image" className="image" />
           </div>
         </Grid>
         <Grid item md={7} xs={12}>

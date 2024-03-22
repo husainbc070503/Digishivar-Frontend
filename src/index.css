@@ -5,7 +5,7 @@
   scroll-behavior: smooth;
 }
 
-img {
+.image {
   width: 100%;
   height: 100%;
 }
@@ -24,6 +24,10 @@ img {
 
 .auth-image {
   height: 60rem;
+}
+
+.hidden{
+  display: none;
 }
 
 .auth-form {
@@ -626,4 +630,8 @@ img {
 
 .icon {
   cursor: pointer;
+}
+
+.invoice-logo {
+  width: 60px;
 }
