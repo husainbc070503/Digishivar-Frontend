@@ -28,6 +28,16 @@
       href="https://fonts.googleapis.com/css2?family=Kode+Mono:wght@400..700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap"
       rel="stylesheet"
     />
+
+    <style>
+    /* Style to position the translation widget on top */
+    #google_translate_element {
+      position: fixed;
+      top: 10px; /* Adjust this value to your preferred distance from the top */
+      left: 10px; /* Adjust this value to your preferred distance from the left */
+      z-index: 9999; /* Ensure it's above other elements */
+    }
+  </style>
   </head>
 
   <body>
@@ -38,12 +48,13 @@
       integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
       crossorigin="anonymous"
     ></script>
+
   </body>
-  <!-- <script src="http://translate.google.com/translate_a/element.js?cb=loadGoogleTranslate"></script>
+  <script src="http://translate.google.com/translate_a/element.js?cb=loadGoogleTranslate"></script>
   <script>
     function loadGoogleTranslate() {
-      new google.translate.TranslateElement("root");
+      new google.translate.TranslateElement({ pageLanguage: 'en', includedLanguages: 'en,hi,mr' }, 'google_translate_element');
     }
-  </script> -->
+  </script>
   <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 </html>
