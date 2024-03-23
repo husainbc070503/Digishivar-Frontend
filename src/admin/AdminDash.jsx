@@ -67,7 +67,7 @@ const AdminDash = () => {
       length: contacts?.length,
       icon: <MessageIcon sx={style} />,
       color: "dark",
-      link: "contacts",
+      link: "qna",
     },
   ];
 

@@ -17,6 +17,7 @@ import SearchBox from "../components/SearchBox";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import Data from "../components/Data";
 import { useGlobalContext } from "../contexts/AppContext";
+import Reviews from "../customer/Reviews";
 
 const Products = () => {
   const { products } = useGlobalContext();
@@ -129,13 +130,9 @@ const Products = () => {
                             <Rating value={rating} precision={0.5} readOnly />
                           }
                         />
-                        {/* <Data
-                          align="center"
-                          fromData={true}
-                          text={
-                            reviews
-                          }
-                        /> */}
+                        <TableCell align="center">
+                          <Reviews reviews={reviews} />
+                        </TableCell>
                       </TableRow>
                     );
                   })
