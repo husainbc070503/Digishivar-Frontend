@@ -129,6 +129,13 @@ const Products = () => {
                             <Rating value={rating} precision={0.5} readOnly />
                           }
                         />
+                        {/* <Data
+                          align="center"
+                          fromData={true}
+                          text={
+                            reviews
+                          }
+                        /> */}
                       </TableRow>
                     );
                   })

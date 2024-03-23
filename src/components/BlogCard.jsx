@@ -18,7 +18,7 @@ const BlogCard = ({ item }) => {
   const { _id, image, title, description, likes, comments } = item;
 
   return (
-    <Card>
+    <Card className="blogCard">
       <CardMedia component="img" src={image} />
       <CardContent>
         <Typography fontSize={28} fontWeight="bold" mb={1} color="secondary">

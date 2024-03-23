@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom/dist";
 import { useGlobalContext } from "../contexts/AppContext";
 import { Box, Container, Grid, Typography } from "@mui/material";
 import logo from "../assets/logo.jpeg";
+import _ from "lodash";
 import {
   Avatar,
   Table,
@@ -52,7 +53,7 @@ const InvoiceNew = () => {
           </Typography>
         </div>
         <div className="invoice-box">
-          <Grid container spacing>
+          <Grid container spacing mt={2}>
             <Grid item md={4} xs={4}>
               <Typography>Name</Typography>
             </Grid>
@@ -76,7 +77,7 @@ const InvoiceNew = () => {
               <Typography>{order?.user?.email}</Typography>
             </Grid>
           </Grid>
-          <Grid container spacing>
+          <Grid container spacing mt={5} mb={2}>
             <Table>
               <TableHead>
                 <TableRow>
@@ -112,7 +113,11 @@ const InvoiceNew = () => {
                       <Data
                         fromData={true}
                         align="center"
-                        text={item?.userQuantity + " " + item?.userQuantityType}
+                        text={
+                          item?.userQuantity +
+                          " " +
+                          _.startCase(item?.userQuantityType)
+                        }
                       />
                     </TableRow>
                   );
@@ -126,7 +131,9 @@ const InvoiceNew = () => {
               <Typography>Transport Mode</Typography>
             </Grid>
             <Grid item md={8} xs={8}>
-              <Typography>{order?.transportationRequired}</Typography>
+              <Typography>
+                {_.startCase(order?.transportationRequired)}
+              </Typography>
             </Grid>
           </Grid>
           <Grid container spacing>
@@ -134,7 +141,7 @@ const InvoiceNew = () => {
               <Typography>Payment Mode</Typography>
             </Grid>
             <Grid item md={8} xs={8}>
-              <Typography>{order?.paymentMode}</Typography>
+              <Typography>{_.startCase(order?.paymentMode)}</Typography>
             </Grid>
           </Grid>
           <Grid container spacing>
@@ -142,7 +149,16 @@ const InvoiceNew = () => {
               <Typography>Total Price</Typography>
             </Grid>
             <Grid item md={8} xs={8}>
-              <Typography>{order?.totalPrice}</Typography>
+              <Typography style={{ fontWeight: "bold" }}>
+                {order?.totalPrice + " Rs."}
+              </Typography>
+            </Grid>
+          </Grid>
+          <Grid container spacing>
+            <Grid item md={7} xs={4} mt={5}>
+              <Typography style={{ fontWeight: "bold" }}>
+                Thankyou For Shopping!
+              </Typography>
             </Grid>
           </Grid>
         </div>

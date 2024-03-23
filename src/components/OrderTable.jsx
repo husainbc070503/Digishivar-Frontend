@@ -23,6 +23,7 @@ const OrderTable = ({ orders }) => {
             <Data align="center" text="Products" />
             <Data align="center" text="Amount Paid" />
             <Data align="center" text="Farmer" />
+            <Data align="center" text="Farmer's No." />
             <Data align="center" text="Transportation Mode" />
             <Data align="center" text="Payment Mode" />
             <Data align="center" text="Payment Status" />
@@ -71,6 +72,7 @@ const OrderTable = ({ orders }) => {
                   }
                 />
                 <Data fromData={true} align="center" text={farmer?.name} />
+                <Data fromData={true} align="center" text={farmer?.phone} />
                 <Data
                   fromData={true}
                   align="center"
