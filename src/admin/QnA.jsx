@@ -22,7 +22,7 @@ const QnA = () => {
   const [search, setSearch] = useState("");
 
   return (
-    <Container className="container" maxWidth="lgp">
+    <Container className="container" maxWidth="lg">
       <Box>
         <Grid container spacing={2}>
           <Grid item md={6} xs={12}>

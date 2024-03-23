@@ -31,7 +31,12 @@ const AdminBlogs = () => {
                   <Card>
                     <Grid container spacing={2}>
                       <Grid item md={4} xs={4}>
-                        <CardMedia component="img" src={image} alt={title} />
+                        <CardMedia
+                          component="img"
+                          sx={{ height: "100%" }}
+                          src={image}
+                          alt={title}
+                        />
                       </Grid>
                       <Grid item md={8} xs={8} px={1}>
                         <Typography fontSize={30} fontWeight="bold" mb={1}>
