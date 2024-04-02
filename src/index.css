@@ -26,7 +26,7 @@
   height: 60rem;
 }
 
-.hidden{
+.hidden {
   display: none;
 }
 
@@ -622,15 +622,15 @@
   cursor: pointer;
 }
 
-#google_translate_element{
-  margin-left: 20%;
-  position: absolute;
-}
-
 .CardMedia.size {
   width: 100%;
   height: 220px;
   margin: 0 auto;
+}
+
+#google_translate_element {
+  margin-left: 20%;
+  position: absolute;
 }
 
 /* .blogCard {

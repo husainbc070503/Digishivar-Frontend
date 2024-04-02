@@ -21,7 +21,7 @@ const Navbar = () => {
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="relative" sx={{ padding: "5px 0" }}>
+      <AppBar position="fixed" sx={{ padding: "5px 0" }}>
         <Toolbar>
           {user?.user?.role === "admin" && <SideDrawer />}
 
@@ -33,7 +33,7 @@ const Navbar = () => {
               Digishivar
             </Typography>
 
-            <div id="google_translate_element"></div>
+            <Typography id="google_translate_element"></Typography>
           </Box>
 
           <div className="nav-icon">
